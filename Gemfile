@@ -3,6 +3,14 @@ git_source(:github) {|repo| "https://github.com/#{repo}.git"}
 
 ruby "3.2.2"
 
+group :development, :test do
+  gem "debug", platforms: %i(mri mingw x64_mingw)
+  gem "rspec-rails", "~> 4.0.1"
+  gem "rubocop", "~> 1.26", require: false
+  gem "rubocop-checkstyle_formatter", require: false
+  gem "rubocop-rails", "~> 2.14.0", require: false
+end
+
 gem "i18n-js", "3.9.2"
 
 gem "image_processing", "1.12.2"
@@ -63,14 +71,6 @@ gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html]
 # gem "image_processing", "~> 1.2"
-
-group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html
-  gem "debug", platforms: %i(mri mingw x64_mingw)
-  gem "rubocop", "~> 1.26", require: false
-  gem "rubocop-checkstyle_formatter", require: false
-  gem "rubocop-rails", "~> 2.14.0", require: false
-end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
