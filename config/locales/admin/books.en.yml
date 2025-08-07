@@ -1,0 +1,62 @@
+en:
+  admin:
+    books:
+      title: "Books"
+      heading: "Books Management"
+
+      flash:
+        create:
+          success: "Book added successfully."
+          failure: "Failed to add book."
+        update:
+          success: "Book updated successfully."
+          failure: "Failed to update book."
+        destroy:
+          success: "Book deleted successfully."
+          failure: "Failed to delete book."
+        not_found: "Book not found."
+        please_log_in: "Please log in."
+        access_denied: "Access denied."
+
+      actions:
+        view: "View"
+        edit: "Edit"
+        delete: "Delete"
+        cancel: "Cancel"
+        update: "Update"
+        edit_title: "Edit Book"
+        new_title: "Add New Book"
+        save: "Save"
+        add: "Add Book"
+        search: "Search"
+        back: "Back"
+
+      placeholders:
+        search: "Search by Title"
+        no_description: "No description"
+        no_cover_image: No cover image available
+
+      confirmations:
+        delete: "Are you sure?"
+
+      form:
+        errors: "%{count} error(s) prohibited this book from being saved:"
+
+      prompts:
+        select_author: "Select Author"
+        select_publisher: "Select Publisher"
+
+      attributes:
+        id: "ID"
+        title: "Title"
+        description: "Description"
+        publication_year: "Publication Year"
+        total_quantity: "Total Quantity"
+        available_quantity: "Available Quantity"
+        borrow_count: "Borrow Count"
+        author: "Author"
+        publisher: "Publisher"
+        created_at: "Created At"
+        action: "Action"
+        image: "Book Cover"
+        current_image: "Current Image"

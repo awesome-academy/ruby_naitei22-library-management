@@ -18,6 +18,7 @@ en:
           male: "Male"
           female: "Female"
           other: "Other"
+          
     errors:
       models:
         user:
@@ -43,3 +44,30 @@ en:
               invalid: "is not a valid date"
               in_future: "can't be in the future"
               past_max_year: "can't be more than 100 years ago"
+        book:
+          attributes:
+            title:
+              blank: "Title can't be blank"
+              too_long: "Title can't be longer than %{count} characters"
+            description:
+              too_long: "Description can't be longer than %{count} characters"
+            publication_year:
+              invalid: "Publication Year must be an integer greater than %{year}"
+            total_quantity:
+              blank: "Total Quantity can't be blank"
+              invalid: "Total Quantity must be an integer greater than 0"
+            available_quantity:
+              blank: "Available Quantity can't be blank"
+              invalid: "Available Quantity must be an integer between 0 and Total Quantity"
+            borrow_count:
+              blank: "Borrow Count can't be blank"
+              invalid: "Borrow Count must be an integer greater than or equal to 0"
+            author_id:
+              blank: "Author can't be blank"
+            publisher_id:
+              blank: "Publisher can't be blank"
+        author:
+          attributes:
+            death_date:
+              after_birth: "Death date must be after the birth date"
+              in_future: "Death date can't be in the future"

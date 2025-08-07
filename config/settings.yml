@@ -19,3 +19,6 @@ mailer:
   expire_hour: 2
 sizes:
   size_80: 80
+
+datetime_formats:
+  default: "%d-%m-%Y %H:%M"
