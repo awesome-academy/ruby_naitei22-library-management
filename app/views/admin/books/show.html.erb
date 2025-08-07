@@ -21,6 +21,9 @@
       <p><strong><%= t("admin.books.attributes.total_quantity") %>:</strong> <%= @book.total_quantity %></p>
       <p><strong><%= t("admin.books.attributes.available_quantity") %>:</strong> <%= @book.available_quantity %></p>
       <p><strong><%= t("admin.books.attributes.borrow_count") %>:</strong> <%= @book.borrow_count %></p>
+      <p><strong><%= t("admin.books.attributes.category") %>:</strong>
+        <%= @book.categories.map(&:name).join(", ") %>
+      </p>
       <p><strong><%= t("admin.books.attributes.author") %>:</strong> <%= @book.author.name %></p>
       <p><strong><%= t("admin.books.attributes.publisher") %>:</strong> <%= @book.publisher.name %></p>
       <p><strong><%= t("admin.books.attributes.created_at") %>:</strong>

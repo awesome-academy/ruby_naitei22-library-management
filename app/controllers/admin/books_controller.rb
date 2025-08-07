@@ -10,7 +10,7 @@ class Admin::BooksController < Admin::ApplicationController
     image
   ).freeze
 
-  PRELOAD = %i(author publisher).freeze
+  PRELOAD = %i(author publisher categories).freeze
 
   before_action :set_book, only: %i(show edit update destroy)
 
@@ -81,6 +81,6 @@ class Admin::BooksController < Admin::ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(*PERMITTED_BOOK_PARAMS)
+    params.require(:book).permit(*PERMITTED_BOOK_PARAMS, category_ids: [])
   end
 end
