@@ -17,4 +17,10 @@ class Category < ApplicationRecord
   scope :without_books, -> {left_joins(:books).where(books: {id: nil})}
 
   delegate :count, to: :books, prefix: true
+
+  scope :recent, -> {order(created_at: :desc)}
+
+  def self.ransackable_attributes(*)
+    %w(name)
+  end
 end

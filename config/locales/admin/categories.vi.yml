@@ -1,0 +1,44 @@
+vi:
+  admin:
+    categories:
+      title: "Thể loại"
+      heading: "Quản lý thể loại"
+      edit_title: "Chỉnh sửa thể loại"
+      new_title: "Thêm thể loại mới"
+
+      flash:
+        not_found: "Không tìm thấy thể loại."
+        create:
+          success: "Thêm thể loại thành công."
+          failure: "Thêm thể loại thất bại."
+        update:
+          success: "Cập nhật thể loại thành công."
+          failure: "Cập nhật thể loại thất bại."
+        destroy:
+          success: "Xóa thể loại thành công."
+          failure: "Xóa thể loại thất bại."
+
+      actions:
+        view: "Xem"
+        edit: "Sửa"
+        delete: "Xóa"
+        search: "Tìm kiếm"
+        add: "Thêm thể loại"
+        back: "Quay lại"
+        save: "Lưu"
+        cancel: "Hủy"
+        update: "Cập nhật"
+
+      confirmations:
+        delete: "Bạn có chắc chắn muốn xóa thể loại này không?"
+
+      placeholders:
+        search: "Tìm kiếm theo tên"
+        no_description: "Chưa có mô tả"
+
+      attributes:
+        id: "ID"
+        name: "Tên"
+        description: "Mô tả"
+        created_at: "Ngày tạo"
+        updated_at: "Ngày cập nhật"
