@@ -1,0 +1,61 @@
+vi:
+  admin:
+    books:
+      title: "Sách"
+      heading: "Quản lý sách"
+      flash:
+        create:
+          success: "Thêm sách thành công."
+          failure: "Thêm sách thất bại."
+        update:
+          success: "Cập nhật sách thành công."
+          failure: "Cập nhật sách thất bại."
+        destroy:
+          success: "Xóa sách thành công."
+          failure: "Xóa sách thất bại."
+        not_found: "Không tìm thấy sách."
+        please_log_in: "Vui lòng đăng nhập."
+        access_denied: "Bạn không có quyền truy cập."
+
+      actions:
+        view: "Xem"
+        edit: "Sửa"
+        delete: "Xóa"
+        cancel: "Hủy"
+        update: "Cập nhật"
+        edit_title: "Chỉnh sửa sách"
+        new_title: "Thêm sách mới"
+        save: "Lưu"
+        add: "Thêm sách"
+        search: "Tìm kiếm"
+        back: "Quay lại"
+
+      placeholders:
+        search: "Tìm kiếm theo tên sách"
+        no_description: "Không có mô tả"
+        no_cover_image: "Không có hình ảnh bìa sách"
+
+      confirmations:
+        delete: "Bạn có chắc chắn muốn xóa?"
+
+      form:
+        errors: "%{count} lỗi khiến sách không được lưu:"
+
+      prompts:
+        select_author: "Chọn tác giả"
+        select_publisher: "Chọn nhà xuất bản"
+
+      attributes:
+        id: "ID"
+        title: "Tiêu đề"
+        description: "Mô tả"
+        publication_year: "Năm xuất bản"
+        total_quantity: "Số lượng"
+        available_quantity: "Số lượng có sẵn"
+        borrow_count: "Số lần mượn"
+        created_at: "Ngày tạo"
+        author: "Tác giả"
+        publisher: "Nhà xuất bản"
+        action: "Hành động"
+        image: "Bìa sách"
+        current_image: "Hình ảnh hiện tại"

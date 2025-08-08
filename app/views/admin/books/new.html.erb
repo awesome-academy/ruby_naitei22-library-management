@@ -1,0 +1,7 @@
+<div class="card shadow-sm p-4">
+  <h3 class="mb-4 fw-bold"><%= t("admin.books.actions.new_title") %></h3>
+  <%= render "form",
+        book: @book,
+        submit_text: t("admin.books.actions.save"),
+        cancel_path: admin_books_path %>
+</div>

@@ -1,0 +1,58 @@
+.books-table {
+  .btn {
+    font-weight: 500;
+  }
+
+  .table th {
+    text-align: center;
+    vertical-align: middle;
+    background-color: #f8f9fa;
+  }
+
+  .table td {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  .form-control {
+    min-width: 250px;
+  }
+
+  @media (max-width: 768px) {
+    .d-flex {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .form-control {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.books-form {
+  .form-label {
+    font-weight: 500;
+  }
+
+  .btn {
+    min-width: 100px;
+  }
+
+  .form-select {
+    min-width: 300px;
+  }
+}
+
+.search-btn {
+  display: inline-block;
+  font-size: 1rem;
+  margin-left: 10px;
+  padding: 0.25rem 0.75rem;
+  width: 80px;
+}

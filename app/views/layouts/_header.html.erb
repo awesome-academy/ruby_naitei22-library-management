@@ -11,7 +11,7 @@
         <div class="nav-item"><%= link_to "📊 #{t('sidebar.dashboard')}", "#", class: "nav-link" %></div>
         <div class="nav-item"><%= link_to "👥 #{t('sidebar.users')}", "#", class: "nav-link" %></div>
         <div class="nav-item"><%= link_to "📥 #{t('sidebar.borrow_requests')}", "#", class: "nav-link" %></div>
-        <div class="nav-item"><%= link_to "📚 #{t('sidebar.books')}", "#", class: "nav-link" %></div>
+        <div class="nav-item"><%= link_to "📚 #{t('sidebar.books')}", admin_books_path, class: "nav-link #{'active' if current_page?(admin_books_path)}" %></div>
         <div class="nav-item"><%= link_to "✍️ #{t('sidebar.authors')}", "#", class: "nav-link" %></div>
         <div class="nav-item"><%= link_to "🗂 #{t('sidebar.categories')}", "#", class: "nav-link" %></div>
         <div class="nav-item"><%= link_to "🏢 #{t('sidebar.publishers')}", "#", class: "nav-link" %></div>
@@ -38,7 +38,7 @@
   <% if logged_in? %>
     <div class="left-content">
       <span class="fw-bold fs-5">
-        <%= gravatar_for current_user, size: 30 %>
+        <%= gravatar_for current_user, size: 30 if current_user %>
         <%= current_user&.name %>
       </span>
     </div>

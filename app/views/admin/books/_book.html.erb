@@ -1,0 +1,14 @@
+<tr>
+  <td><%= book.id %></td>
+  <td class="text-start"><%= book.title %></td>
+  <td><%= book.total_quantity %></td>
+  <td><%= book.available_quantity %></td>
+  <td>
+    <%= link_to t("admin.books.actions.view"), admin_book_path(book), class: "btn btn-sm btn-primary me-1" %>
+    <%= link_to t("admin.books.actions.edit"), edit_admin_book_path(book), class: "btn btn-sm btn-success me-1" %>
+    <%= link_to t("admin.books.actions.delete"), admin_book_path(book),
+                data: { turbo_method: :delete },
+                onclick: "return confirm('#{t("admin.books.confirmations.delete")}');",
+                class: "btn btn-sm btn-danger" %>
+  </td>
+</tr>

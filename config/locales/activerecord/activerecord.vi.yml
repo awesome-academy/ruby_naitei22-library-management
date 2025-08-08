@@ -44,3 +44,30 @@ vi:
               invalid: "không phải là ngày hợp lệ"
               in_future: "không được ở tương lai"
               past_max_year: "không được cách hiện tại quá 100 năm"
+        book:
+          attributes:
+            title:
+              blank: "Tiêu đề không được để trống"
+              too_long: "Tiêu đề không được dài quá %{count} ký tự"
+            description:
+              too_long: "Mô tả không được dài quá %{count} ký tự"
+            publication_year:
+              invalid: "Năm xuất bản phải là số nguyên lớn hơn %{year}"
+            total_quantity:
+              blank: "Tổng số lượng không được để trống"
+              invalid: "Tổng số lượng phải là số nguyên lớn hơn 0"
+            available_quantity:
+              blank: "Số lượng có sẵn không được để trống"
+              invalid: "Số lượng có sẵn phải từ 0 đến tổng số lượng"
+            borrow_count:
+              blank: "Số lần mượn không được để trống"
+              invalid: "Số lần mượn phải là số nguyên không âm"
+            author_id:
+              blank: "Vui lòng chọn tác giả"
+            publisher_id:
+              blank: "Vui lòng chọn nhà xuất bản"
+        author:
+          attributes:
+            death_date:
+              after_birth: "Ngày mất phải sau ngày sinh"
+              in_future: "Ngày mất không được ở tương lai"

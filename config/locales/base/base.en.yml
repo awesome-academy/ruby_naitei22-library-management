@@ -34,3 +34,7 @@ en:
     favorite: Favorite
     follow: Follow
     borrow_list: Borrow List
+
+  layouts:
+    application:
+      base_title: "Library Management"
