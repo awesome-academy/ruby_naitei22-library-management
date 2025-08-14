@@ -1,0 +1,14 @@
+vi:
+  authors:
+    show:
+      about_author: "Về tác giả"
+      no_of_books: "Số sách"
+      no_of_followers: "Số người theo dõi"
+      no_bio: "Chưa có tiểu sử."
+      more_books_by_author: "Các sách khác của tác giả"
+      favorite_success: "Đã thêm tác giả vào mục yêu thích."
+      favorite_failed: "Thêm tác giả vào yêu thích thất bại."
+      unfavorite_success: "Đã bỏ tác giả khỏi mục yêu thích."
+      unfavorite_failed: "Bỏ tác giả khỏi yêu thích thất bại."
+      author_not_found: "Tác giả không tồn tại hoặc đã bị xóa."
+      favorite_not_found: "Không tìm thấy tác giả trong mục yêu thích."

@@ -82,7 +82,7 @@
         <% end %>
       </div>
       <div class="col-md-10">
-        <h4><strong><%= link_to @book.author.name, "#", class: "text-dark" %></strong></h4>
+        <h4><strong><%= link_to @book.author.name, author_path(@book.author), class: "text-dark" %></strong></h4>
         <div class="mb-2 text-muted">
           <span><%= t(".no_of_books") %>: <%= @book.author.books.count %></span> |
           <span><%= t(".no_of_followers") %>: <%= @book.author.favorites.count %></span>

@@ -1,0 +1,14 @@
+en:
+  authors:
+    show:
+      about_author: "About the Author"
+      no_of_books: "Number of books"
+      no_of_followers: "Number of followers"
+      no_bio: "No biography available."
+      more_books_by_author: "More books by this author"
+      favorite_success: "Author has been added to your favorites."
+      favorite_failed: "Failed to add author to favorites."
+      unfavorite_success: "Author has been removed from your favorites."
+      unfavorite_failed: "Failed to remove author from favorites."
+      author_not_found: "Author does not exist or has been deleted."
+      favorite_not_found: "Favorite not found."

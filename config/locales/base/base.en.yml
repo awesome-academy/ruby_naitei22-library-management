@@ -38,10 +38,6 @@ en:
     follow: Follow
     borrow_list: Borrow List
 
-  layouts:
-    application:
-      base_title: "Library Management"
-
   login_modal:
     title: "Login Required"
     message: "You need to log in to perform this action."

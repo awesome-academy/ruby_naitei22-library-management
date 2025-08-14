@@ -37,10 +37,6 @@ vi:
     favorite: Yêu thích
     follow: Theo dõi
     borrow_list: Danh sách mượn
-  
-  layouts:
-    application:
-      base_title: "Quản lí thư viện"
 
   login_modal:
     title: "Yêu cầu đăng nhập"

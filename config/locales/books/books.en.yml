@@ -32,6 +32,7 @@ en:
       unfavorite_success: "Book has been removed from your favorites."
       unfavorite_failed: "Failed to remove book from favorites."
       favorite_not_found: "Favorite not found."
+      book_not_found: "Book does not exist or has been deleted."
 
     favorite_button:
       unfavorite: "Unfavorite"

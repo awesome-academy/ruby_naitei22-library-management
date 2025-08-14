@@ -1,0 +1,43 @@
+<!-- Author Info -->
+<div class="author-info-wrapper mb-5 ps-5 pe-5">
+  <div class="author-border-line"></div>
+
+  <div class="d-flex justify-content-between align-items-center">
+    <h4><strong><%= t(".about_author") %></strong></h4>
+    <div class = "pe-5">
+      <%= render partial: "books/favorite_button", locals: { item: @author } %>
+    </div>
+  </div>
+
+  <div class="row align-items-center px-3 py-4 m-2">
+    <div class="col-md-2 text-center">
+      <% if @author.image.attached? %>
+        <%= image_tag url_for(author.image), class: "rounded-circle author-avatar" %>
+      <% else %>
+        <%= image_tag Settings.images.default_author, class: "rounded-circle author-avatar" %>
+      <% end %>
+    </div>
+    <div class="col-md-10">
+      <h4><strong><span class="text-dark"><%= @author.name %></span></strong></h4>
+      <div class="mb-2 text-muted">
+        <span><%= t(".no_of_books") %>: <%= @author.books.count %></span> |
+        <span><%= t(".no_of_followers") %>: <%= @author.favorites.count %></span>
+      </div>
+      <p><%= @author.bio.presence || t(".no_bio") %></p>
+    </div>
+  </div>
+
+  <div class="author-border-line"></div>
+</div>
+
+<!-- More books by same author -->
+<% if @author && @recommended_books.present? %>
+  <div class="mt-5 ms-5 me-5">
+    <h4 class="mb-4"><strong><%= t(".more_books_by_author") %></strong></h4>
+    <div class="ms-5">
+      <%= turbo_frame_tag "recommended_books" do %>
+        <%= render partial: "books/recommended_books" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
