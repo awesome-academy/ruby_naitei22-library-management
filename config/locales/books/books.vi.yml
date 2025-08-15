@@ -37,3 +37,35 @@ vi:
     favorite_button:
       unfavorite: "Bỏ yêu thích"
       add_to_favorite: "Thêm vào yêu thích"
+    search:
+      search_results: "Kết Quả Tìm Kiếm"
+      search_placeholder: "Tìm theo tên sách, tác giả, thể loại hoặc nhà xuất bản..."
+      search: "Tìm kiếm"
+      results_for: "Kết quả cho \"%{query}\""
+      found_count:
+        other: "Tìm thấy %{count} cuốn sách"
+      author: "Tác giả"
+      publisher: "Nhà xuất bản"
+      categories: "Thể loại"
+      available: "Có sẵn"
+      view_details: "Xem chi tiết"
+      borrow: "Mượn"
+      unavailable: "Hết sách"
+      no_results: "Không tìm thấy sách nào"
+      try_different_search: "Thử tìm kiếm với từ khóa khác"
+      showing_results: "Hiển thị %{from}-%{to} trong %{total} kết quả"
+      search_by_title: "Tìm theo Tên Sách"
+      search_by_category: "Tìm theo Thể Loại"
+      search_by_author: "Tìm theo Tác Giả"
+      search_by_publisher: "Tìm theo Nhà Xuất Bản"
+      search_all: "Tìm Tất Cả"
+      in_title: "trong tên sách"
+      in_category: "trong thể loại"
+      in_author: "trong tác giả"
+      in_publisher: "trong nhà xuất bản"
+      items_per_page:
+        other: "%{count} mục mỗi trang"
+
+  topbar:
+    search_placeholder: "Tìm sách..."
+    search: "Tìm"

@@ -1,14 +1,143 @@
-<% provide(:title, t(".title")) %>
-<% provide(:button_text, t(".submit")) %>
+<% provide(:title, t(".edit_profile")) %>
 
-<h1 class="text-center display-1"><%= t(".title") %></h1>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <!-- Page Header -->
+      <div class="mb-4">
+        <h2 class="fw-bold"><%= t(".edit_profile") %></h2>
+        <hr class="mt-2">
+      </div>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= render "form" %>
-    <div class="gravatar_edit">
-      <%= gravatar_for @user %>
-      <a href="http://gravatar.com/emails" target="_blank"><%= t(".change") %></a>
+      <%= form_with(model: @user, local: true, class: "needs-validation", novalidate: true) do |f| %>
+        <%= render "shared/error_messages", object: @user %>
+
+        <!-- Basic Information Section -->
+        <div class="mb-5">
+          <h4 class="text-primary mb-3">
+            <i class="bi bi-person-fill me-2"></i><%= t(".basic_info") %>
+          </h4>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <%= f.label :name, t(".name"), class: "form-label fw-semibold" %>
+              <%= f.text_field :name,
+                  class: "form-control form-control-lg",
+                  placeholder: t(".name_placeholder") %>
+            </div>
+            <div class="col-md-6">
+              <%= f.label :email, t(".email"), class: "form-label fw-semibold" %>
+              <%= f.email_field :email,
+                  class: "form-control form-control-lg",
+                  placeholder: t(".email_placeholder") %>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <%= f.label :date_of_birth, t(".date_of_birth"), class: "form-label fw-semibold" %>
+              <%= f.date_field :date_of_birth, class: "form-control form-control-lg" %>
+            </div>
+            <div class="col-md-6">
+              <%= f.label :gender, t(".gender"), class: "form-label fw-semibold" %>
+              <%= f.select :gender,
+                  User.genders.keys.map { |g| [t("activerecord.attributes.user.gender_options.#{g}"), g] },
+                  { prompt: t(".select_gender") },
+                  { class: "form-select form-select-lg" } %>
+            </div>
+          </div>
+
+          <hr class="my-4">
+        </div>
+
+        <!-- Contact Information Section -->
+        <div class="mb-5">
+          <h4 class="text-primary mb-3">
+            <i class="bi bi-telephone-fill me-2"></i><%= t(".contact_info") %>
+          </h4>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <%= f.label :phone_number, t(".phone_number"), class: "form-label fw-semibold" %>
+              <%= f.telephone_field :phone_number,
+                  class: "form-control form-control-lg",
+                  placeholder: t(".phone_placeholder") %>
+            </div>
+            <div class="col-md-6">
+              <!-- Empty column for layout balance -->
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-12">
+              <%= f.label :address, t(".address"), class: "form-label fw-semibold" %>
+              <%= f.text_area :address,
+                  class: "form-control",
+                  rows: 3,
+                  placeholder: t(".address_placeholder") %>
+            </div>
+          </div>
+
+          <hr class="my-4">
+        </div>
+
+        <!-- Password Section -->
+        <div class="mb-5">
+          <h4 class="text-primary mb-3">
+            <i class="bi bi-lock-fill me-2"></i><%= t(".change_password") %>
+          </h4>
+          <p class="text-muted mb-3"><%= t(".password_help") %></p>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <%= f.label :password, t(".new_password"), class: "form-label fw-semibold" %>
+              <%= f.password_field :password,
+                  class: "form-control form-control-lg",
+                  placeholder: t(".password_placeholder") %>
+            </div>
+            <div class="col-md-6">
+              <%= f.label :password_confirmation, t(".confirm_password"), class: "form-label fw-semibold" %>
+              <%= f.password_field :password_confirmation,
+                  class: "form-control form-control-lg",
+                  placeholder: t(".confirm_password_placeholder") %>
+            </div>
+          </div>
+
+          <hr class="my-4">
+        </div>
+
+        <!-- Profile Picture Section -->
+        <div class="mb-5">
+          <h4 class="text-primary mb-3">
+            <i class="bi bi-image-fill me-2"></i><%= t(".profile_picture") %>
+          </h4>
+
+          <div class="d-flex align-items-center mb-3">
+            <%= gravatar_for @user, size: Settings.sizes.size_80, class: "rounded-circle me-4" %>
+            <div>
+              <h6 class="mb-1"><%= t(".current_picture") %></h6>
+              <p class="text-muted mb-2"><%= t(".gravatar_info") %></p>
+              <%= link_to t(".change_picture"),
+                  Settings.links.gravatar,
+                  target: "_blank",
+                  class: "btn btn-outline-primary btn-sm" %>
+            </div>
+          </div>
+
+          <hr class="my-4">
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-between align-items-center pt-3">
+          <%= link_to user_path(@user), class: "btn btn-outline-secondary btn-lg px-4" do %>
+            <i class="bi bi-arrow-left me-2"></i><%= t(".cancel") %>
+          <% end %>
+
+          <%= f.submit t(".update_profile"), class: "btn btn-dark rounded-pill px-5 py-3 fs-6" do %>
+            <i class="bi bi-check-circle me-2"></i><%= t(".update_profile") %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

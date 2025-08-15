@@ -3,13 +3,15 @@ en:
     models:
       user: "User"
       product: "Product"
-      
+
     attributes:
       product:
         name: "Name"
       user:
         name: "Name"
         email: "Email"
+        phone_number: "Phone Number"
+        address: "Address"
         password: "Password"
         password_confirmation: "Password Confirmation"
         date_of_birth: "Date of Birth"
@@ -18,7 +20,7 @@ en:
           male: "Male"
           female: "Female"
           other: "Other"
-          
+
     errors:
       models:
         user:
@@ -80,3 +82,9 @@ en:
             actual_return_date:
               blank_if_returned: "Actual return date cannot be blank when status is returned"
               cannot_be_future: "Actual return date cannot be in the futuredfsd"
+            phone_number:
+              invalid_phone_number: "must be a valid phone number (10-15 digits, optional + for country code)"
+              blank: "can't be blank"
+            address:
+              too_long: "is too long (maximum is 500 characters)"
+              blank: "can't be blank"

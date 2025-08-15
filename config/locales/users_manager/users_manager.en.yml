@@ -1,0 +1,16 @@
+en:
+  admin:
+    users:
+      index:
+        title: "User Management"
+        id: "ID"
+        name: "Name"
+        email: "Email"
+        username: "Username"
+        action: "Action"
+        view: "View"
+        status: "Status"
+        no_users: "No users found"
+      flash:
+        unauthorized_access: "You are not authorized to access this page."
+        not_found: "User not found"

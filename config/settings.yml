@@ -5,6 +5,8 @@ links:
   rails_home: "http://www.railstutorial.org/"
   rails_help: "http://www.railstutorial.org/help"
   rails_book: "http://www.railstutorial.org/book"
+  gravatar: "https://gravatar.com/emails"
+
 digits:
   digit_0: 0
   digit_5: 5
@@ -13,10 +15,14 @@ digits:
   digit_12: 12
   digit_14: 14
   digit_20: 20
+
 pagy:
   items: 10
+  books: 20
+
 email:
   from_address: "noreply@example.com"
+
 user_mailer:
   host: localhost:3000
   protocol: http
@@ -25,8 +31,10 @@ images:
   default_cover: "default_cover.jpg"
   default_author: "default_author.jpg"
   rating_and_reviews_avatar: "Rating&comment_user_image.jpg"
+
 mailer:
   expire_hour: 2
+
 sizes:
   size_80: 80
 
@@ -41,3 +49,10 @@ user:
 book:
   cover_image_size: "60x80"
   default_cover_image: "book/default_book.png"
+
+books:
+  title_truncated_length: 50
+  category_truncated_length: 40
+  author_truncated_length: 30
+  publisher_truncated_length: 30
+  minimum_available_copies: 0

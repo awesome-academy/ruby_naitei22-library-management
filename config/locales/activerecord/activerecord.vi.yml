@@ -3,13 +3,15 @@ vi:
     models:
       user: "Người dùng"
       product: "Sản phẩm"
-      
+
     attributes:
       product:
         name: "Tên sản phẩm"
       user:
         name: "Họ và tên"
         email: "Email"
+        phone_number: "Số Điện Thoại"
+        address: "Địa Chỉ"
         password: "Mật khẩu"
         password_confirmation: "Xác nhận mật khẩu"
         date_of_birth: "Ngày sinh"
@@ -80,3 +82,9 @@ vi:
             actual_return_date:
               blank_if_returned: "Ngày trả thực tế không được để trống khi trạng thái đã trả"
               cannot_be_future: "Ngày trả thực tế không được sau ngày hiện tại"
+            phone_number:
+              invalid_phone_number: "phải là số điện thoại hợp lệ (10-15 chữ số, có thể có + cho mã quốc gia)"
+              blank: "không được để trống"
+            address:
+              too_long: "quá dài (tối đa 500 ký tự)"
+              blank: "không được để trống"

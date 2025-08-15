@@ -1,4 +1,6 @@
 class StaticPagesController < ApplicationController
+  include ApplicationHelper
+
   def home
     @pagy_books, @recommended_books = pagy(Book.recommended,
                                            items: Settings.digits.digit_14)

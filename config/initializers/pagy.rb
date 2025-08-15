@@ -13,3 +13,5 @@ Pagy::DEFAULT[:trim_extra] = false
 # Bắt buộc giới hạn limit bằng items
 Pagy::DEFAULT[:limit] = Pagy::DEFAULT[:items]
 require "pagy/extras/i18n"
+
+Pagy::DEFAULT[:size] = 9

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   scope "(:locale)", locale: /en|vi/ do
     namespace :admin do
+      resources :users, only: [:index]
       resources :borrow_requests, only: [:index,:show] do
         member do
           get :edit_status
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
         end
       end
     end
-    
+
     root "static_pages#home"
 
     get "/home",    to: "static_pages#home",    as: :home
@@ -29,7 +30,17 @@ Rails.application.routes.draw do
     get "/setup_password", to: "users#setup_password"
     patch "/setup_password", to: "users#update_password"
 
-    resources :users
+    get "search", to: "books#search", as: :search_books
+
+    resources :password_resets, only: [:new, :create, :edit, :update]
+    resources :users, only: [:show, :new, :create, :edit, :update] do
+      member do
+        get :favorites
+        get :setup_password
+        patch :update_password
+      end
+      resources :password_resets, only: [:new, :create, :edit, :update]
+    end
     resources :account_activations, only: :edit
     resources :password_resets, only: %i(new create edit update)
     namespace :admin do

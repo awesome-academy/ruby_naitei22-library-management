@@ -7,6 +7,22 @@ write_a_review)
   before_action :set_reviews, only: :show
   before_action :load_favorite, only: %i(add_to_favorite remove_from_favorite)
 
+  BOOK_INCLUDES = %i(author publisher categories).freeze
+  BOOK_INCLUDES_WITH_IMAGE = [:author, :publisher, :categories,
+{image_attachment: :blob}].freeze
+
+  DEFAULT = "all".freeze
+
+  SEARCH_TYPES = {
+    title: :title,
+    category: :category,
+    author: :author,
+    publisher: :publisher,
+    all: :all
+  }.freeze
+
+  DEFAULT_SEARCH_TYPE = :all
+
   # GET /books/:id
   def show
     respond_to do |format|
@@ -19,6 +35,23 @@ write_a_review)
         )
       end
     end
+  end
+
+  # GET /books/search
+  def search
+    @query = params[:q]
+    @search_type = normalize_search_type(params[:search_type])
+
+    books_scope = if @query.present?
+                    Book.search(@query, @search_type)
+                        .includes(BOOK_INCLUDES_WITH_IMAGE)
+                  else
+                    Book.includes(BOOK_INCLUDES_WITH_IMAGE)
+                        .order(:title)
+                  end
+
+    @pagy, @books = pagy(books_scope, items: Settings.pagy.books)
+    render :search
   end
 
   # POST /books/:id/borrow
@@ -103,5 +136,10 @@ write_a_review)
 
   def load_favorite
     @favorite = current_user.favorites.find_by(favorable: @book)
+  end
+
+  def normalize_search_type search_type
+    search_type_sym = search_type&.to_sym
+    SEARCH_TYPES.key?(search_type_sym) ? search_type_sym : DEFAULT_SEARCH_TYPE
   end
 end

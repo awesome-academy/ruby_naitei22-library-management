@@ -37,3 +37,37 @@ en:
     favorite_button:
       unfavorite: "Unfavorite"
       add_to_favorite: "Add to Favorite"
+    search:
+      search_results: "Search Results"
+      search_placeholder: "Search by title, author, category, or publisher..."
+      search: "Search"
+      results_for: "Results for \"%{query}\""
+      found_count:
+        one: "Found %{count} book"
+        other: "Found %{count} books"
+      author: "Author"
+      publisher: "Publisher"
+      categories: "Categories"
+      available: "Available"
+      view_details: "View Details"
+      borrow: "Borrow"
+      unavailable: "Unavailable"
+      no_results: "No books found"
+      try_different_search: "Try searching with different keywords"
+      showing_results: "Showing %{from}-%{to} of %{total} results"
+      search_by_title: "Search by Title"
+      search_by_category: "Search by Category"
+      search_by_author: "Search by Author"
+      search_by_publisher: "Search by Publisher"
+      search_all: "Search All"
+      in_title: "in titles"
+      in_category: "in categories"
+      in_author: "in authors"
+      in_publisher: "in publishers"
+      items_per_page:
+        one: "%{count} item per page"
+        other: "%{count} items per page"
+
+  topbar:
+    search_placeholder: "Search books..."
+    search: "Search"

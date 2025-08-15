@@ -4,6 +4,8 @@ gender).freeze
   USER_OAUTH_SETUP_PERMIT = %i(password password_confirmation date_of_birth
 gender).freeze
   USER_PERMIT_FOR_PASSWORD_RESET = %i(password password_confirmation).freeze
+  USER_PERMIT_FOR_PROFILE = %i(name email password password_confirmation
+                               date_of_birth gender phone_number address).freeze
 
   has_secure_password
   # has_secure_password cung cấp: # rubocop:disable Style/AsciiComments
@@ -17,13 +19,15 @@ gender).freeze
   enum status: {inactive: 0, active: 1}
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  VALID_PHONE_REGEX = /\A\+?\d{10,15}\z/
   NAME_MAX_LENGTH = 50
   EMAIL_MAX_LENGTH = 255
   MAX_YEARS_AGO = 100
 
   has_many :reviews, dependent: :destroy
-
   has_many :favorites, dependent: :destroy
+  has_many :favorite_books, through: :favorites, source: :favorable,
+            source_type: Book.name
 
   has_one_attached :image
 
@@ -33,6 +37,18 @@ gender).freeze
   before_create :create_activation_digest
 
   scope :recent, -> {order(created_at: :desc)}
+  scope :order_by_created, -> {order(created_at: :asc)}
+
+  scope :with_favorite_books_included, (lambda do
+    includes(
+      favorite_books: [
+        :author,
+        :publisher,
+        :categories,
+        {image_attachment: :blob}
+      ]
+    )
+  end)
 
   validates :name, presence: true, length: {maximum: NAME_MAX_LENGTH}
   validates :email,
@@ -47,6 +63,13 @@ gender).freeze
                      allow_nil: true,
                      if: :password_required?
   validate :password_presence_if_confirmation_provided
+  validates :phone_number,
+            format: {with: VALID_PHONE_REGEX, message: :invalid_phone_number},
+            allow_blank: true
+
+  validates :address,
+            length: {maximum: 500},
+            allow_blank: true
 
   def favorited? item
     favorites.exists?(favorable: item)
@@ -157,6 +180,11 @@ gender).freeze
 
   def password_required?
     return false if oauth_user? && new_record?
+
+    # For profile updates, only require password if it's being changed
+    if persisted? && password.blank? && password_confirmation.blank?
+      return false
+    end
 
     (password_digest.blank? || !password.nil?) && !oauth_user?
   end

@@ -72,3 +72,13 @@
   border-bottom: 1px solid #ddd;
   padding: 0 70px 0 30px;
 }
+
+.search-bar {
+  .form-control {
+    border-radius: 20px;
+  }
+
+  .btn {
+    border-radius: 20px;
+  }
+}

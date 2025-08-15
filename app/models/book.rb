@@ -68,9 +68,6 @@ class Book < ApplicationRecord
 
   scope :exclude_book, ->(book_id) {where.not(id: book_id)}
 
-  scope :search, (lambda do |keyword|
-    where("title LIKE ?", "%#{keyword}%") if keyword.present?
-  end)
   scope :recent, -> {order(created_at: :desc)}
   scope :with_cover, -> {joins(:image_attachment)}
   scope :without_cover, (lambda do
@@ -85,4 +82,30 @@ class Book < ApplicationRecord
 
     reviews.average(:score).round(1)
   end
+
+  scope :search, lambda {|query, search_type = :all|
+    return none if query.blank?
+
+    case search_type.to_sym
+    when :title
+      where("books.title LIKE ?", "%#{query}%")
+    when :author
+      joins(:author).where("authors.name LIKE ?", "%#{query}%")
+    when :publisher
+      joins(:publisher).where("publishers.name LIKE ?", "%#{query}%")
+    when :category
+      joins(:categories).where("categories.name LIKE ?", "%#{query}%")
+    else # :all or any other value
+      joins(:author, :publisher)
+        .left_joins(:categories)
+        .where(
+          "books.title LIKE :query OR
+           authors.name LIKE :query OR
+           publishers.name LIKE :query OR
+           categories.name LIKE :query",
+          query: "%#{query}%"
+        )
+        .distinct
+    end
+  }
 end

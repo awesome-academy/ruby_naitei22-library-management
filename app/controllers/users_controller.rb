@@ -1,9 +1,16 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: %i(edit update)
+  before_action :logged_in_user,
+                only: %i(show edit update setup_password update_password)
   before_action :load_user, only: %i(show edit update)
-  before_action :correct_user, only: %i(edit update)
+  before_action :correct_user, only: %i(show edit update)
   before_action :require_password_setup,
                 only: %i(setup_password update_password)
+
+  FAVORITE_INCLUDES = %i(author publisher categories image_attachment:
+blob).freeze
+  AUTHOR_ID = "author_id".freeze
+  CATEGORY_ID = "category_id".freeze
+  PUBLISHER_ID = "publisher_id".freeze
 
   # GET /signup
   def new
@@ -25,16 +32,39 @@ class UsersController < ApplicationController
   def show; end
 
   # GET /users/:id/edit
-  def edit; end
+  def edit
+    @user = current_user
+  end
 
   # PATCH/PUT /users/:id
   def update
-    if @user.update user_params
-      flash[:success] = t(".success")
+    @user = current_user
+
+    # Remove blank password fields to avoid validation issues
+    update_params = profile_params
+    if update_params[:password].blank? &&
+       update_params[:password_confirmation].blank?
+      update_params.delete(:password)
+      update_params.delete(:password_confirmation)
+    end
+
+    if @user.update(update_params)
+      flash[:success] = t(".profile_updated_successfully")
       redirect_to @user
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  # GET /users/:id/favorites
+  def favorites
+    @user = current_user
+    @pagy, @favorite_books = pagy(
+      @user.ordered_favorite_books_with_includes,
+      items: Settings.pagy.items
+    )
+
+    @favorite_stats = calculate_favorite_stats(@user)
   end
 
   # GET /users/setup_password
@@ -66,6 +96,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(User::USER_PERMIT)
+  end
+
+  def profile_params
+    params.require(:user).permit(User::USER_PERMIT_FOR_PROFILE)
   end
 
   def logged_in_user
@@ -101,5 +135,17 @@ class UsersController < ApplicationController
 
     flash[:danger] = t(".require_password_setup")
     redirect_to root_path
+  end
+
+  def calculate_favorite_stats user
+    {
+      total_favorites: user.favorite_books.count,
+      unique_authors:
+      user.favorite_books.joins(:author).distinct.count(AUTHOR_ID),
+      unique_categories:
+      user.favorite_books.joins(:categories).distinct.count(CATEGORY_ID),
+      unique_publishers:
+      user.favorite_books.joins(:publisher).distinct.count(PUBLISHER_ID)
+    }
   end
 end

@@ -9,16 +9,18 @@
     <h5 class="mb-2 border border-white rounded-5 p-3 text-center d-inline-block"><%= t(".request_book") %></h5>
 
     <!-- Search form -->
-    <%= form_with url: "#", method: :get, local: true, class: "d-flex mt-3" do |f| %>
-      <%= select_tag :category,
-          options_for_select([t(".title"), t(".category"),t(".author"), t(".publisher")]),
-          class: "form-select w-auto rounded-start-5 text-center" %>
+    <%= form_with url: search_books_path, method: :get, local: true, class: "d-flex mt-3" do |f| %>
+      <%= f.select :search_type,
+          search_type_options_for_select(params[:search_type] || default_search_type),
+          {},
+          { class: "form-select form-select-lg w-auto rounded-start-5 text-center" } %>
 
       <%= f.text_field :q,
+          value: params[:q],
           placeholder: t(".search_placeholder"),
-          class: "form-control border-start-0 border-end-0 rounded-0 px-5" %>
+          class: "form-control form-control-lg border-start-0 border-end-0 rounded-0 px-5" %>
 
-      <%= f.submit "🔍", class: "btn-danger rounded-end-5 px-0" %>
+      <%= f.submit "🔍", class: "btn btn-danger btn-lg rounded-end-5 px-4" %>
     <% end %>
   </div>
 </div>

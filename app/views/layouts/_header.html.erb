@@ -9,9 +9,8 @@
     <% if admin_user? %>
       <nav class="nav flex-column">
         <div class="nav-item"><%= link_to "📊 #{t('sidebar.dashboard')}", "#", class: "nav-link" %></div>
-        <div class="nav-item"><%= link_to "👥 #{t('sidebar.users')}", "#", class: "nav-link" %></div>
+        <div class="nav-item"><%= link_to "👥 #{t('sidebar.users')}", admin_users_path, class: "nav-link #{'active' if params[:controller] == "admin/users"}" %></div>
         <div class="nav-item"><%= link_to "📥 #{t('sidebar.borrow_requests')}", admin_borrow_requests_path, class: "nav-link #{'active' if current_page?(admin_borrow_requests_path)}" %></div>
-        <div class="nav-item"><%= link_to "🏠 #{t('sidebar.home')}", root_path, class: "nav-link #{'active' if current_page?(root_path)}" %></div>
         <div class="nav-item"><%= link_to "📚 #{t('sidebar.books')}", admin_books_path, class: "nav-link #{"active" if params[:controller] == "admin/books"}" %></div>
         <div class="nav-item"><%= link_to "✍️ #{t('sidebar.authors')}", admin_authors_path, class: "nav-link #{"active" if params[:controller] == "admin/authors"}" %></div>
         <div class="nav-item"><%= link_to "🗂 #{t('sidebar.categories')}", "#", class: "nav-link" %></div>
@@ -19,17 +18,17 @@
       </nav>
     <% else %>
       <nav class="nav flex-column">
-        <div class="nav-item"><%= link_to "🏠 #{t('sidebar.home')}", root_path, class: "nav-link #{'active' if current_page?(root_path)}" %></div>
-        <div class="nav-item"><%= link_to "🔍 #{t('sidebar.search')}", "#", class: "nav-link" %></div>
-        <div class="nav-item"><%= link_to "⭐ #{t('sidebar.favorite')}", "#", class: "nav-link" %></div>
-        <div class="nav-item"><%= link_to "👤 #{t('sidebar.follow')}", "#", class: "nav-link" %></div>
-        <div class="nav-item"><%= link_to "📚 #{t('sidebar.borrow_list')}", "#", class: "nav-link" %></div>
+        <div class="nav-item"><%= link_to "🏠 #{t("sidebar.home")}", root_path, class: "nav-link #{"active" if current_page?(root_path)}" %></div>
+        <div class="nav-item"><%= link_to "🔍 #{t("sidebar.search")}", search_books_path, class: "nav-link" %></div>
+        <div class="nav-item"><%= link_to "⭐ #{t("sidebar.favorite")}", favorites_user_path(current_user), class: "nav-link" %></div>
+        <div class="nav-item"><%= link_to "👤 #{t("sidebar.follow")}", "#", class: "nav-link" %></div>
+        <div class="nav-item"><%= link_to "📚 #{t("sidebar.borrow_list")}", "#", class: "nav-link" %></div>
       </nav>
     <% end %>
   <% else %>
     <nav class="nav flex-column">
-      <div class="nav-item"><%= link_to "🏠 #{t('sidebar.home')}", root_path, class: "nav-link #{'active' if current_page?(root_path)}" %></div>
-      <div class="nav-item"><%= link_to "🔍 #{t('sidebar.search')}", "#", class: "nav-link" %></div>
+      <div class="nav-item"><%= link_to "🏠 #{t("sidebar.home")}", root_path, class: "nav-link #{"active" if current_page?(root_path)}" %></div>
+      <div class="nav-item"><%= link_to "🔍 #{t("sidebar.search")}", search_books_path, class: "nav-link" %></div>
     </nav>
   <% end %>
 </div>
@@ -58,7 +57,7 @@
         </button>
         <ul class="dropdown-menu">
           <li><%= link_to t("topbar.profile"), current_user %></li>
-          <li><%= link_to t("topbar.settings"), "#"%></li>
+          <li><%= link_to t("topbar.settings"), edit_user_path(current_user) %></li>
           <li><hr class="dropdown-divider"></li>
           <li><%= link_to t("topbar.log_out"), logout_path, data: { "turbo-method": :delete }%></li>
         </ul>
@@ -67,6 +66,17 @@
   <% else %>
     <div class="left-content">
       <span class="fw-bold fs-5">👤 <%= t("topbar.guest") %></span>
+    </div>
+
+    <div class="search-bar flex-grow-1 mx-4">
+      <%= form_with url: search_books_path, method: :get, local: true, class: "d-flex" do |f| %>
+        <%= f.text_field :q,
+            placeholder: t("topbar.search_placeholder"),
+            class: "form-control me-2 flex-grow-1 search-input" %>
+        <div>
+          <%= f.submit t("topbar.search"), class: "btn btn-dark search-submit-btn" %>
+        </div>
+      <% end %>
     </div>
 
     <div class="right-buttons">
