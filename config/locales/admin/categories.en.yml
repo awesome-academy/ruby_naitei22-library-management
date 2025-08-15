@@ -1,0 +1,44 @@
+en:
+  admin:
+    categories:
+      title: "Categories"
+      heading: "Manage Categories"
+      edit_title: "Edit Category"
+      new_title: "Add New Category"
+
+      flash:
+        not_found: "Category not found."
+        create:
+          success: "Category was successfully created."
+          failure: "Failed to create category."
+        update:
+          success: "Category was successfully updated."
+          failure: "Failed to update category."
+        destroy:
+          success: "Category was successfully deleted."
+          failure: "Failed to delete category."
+
+      actions:
+        view: "View"
+        edit: "Edit"
+        delete: "Delete"
+        search: "Search"
+        add: "Add Category"
+        back: "Back"
+        save: "Save"
+        cancel: "Cancel"
+        update: "Update"
+
+      confirmations:
+        delete: "Are you sure you want to delete this category?"
+
+      placeholders:
+        search: "Search by name"
+        no_description: "No description available"
+
+      attributes:
+        id: "ID"
+        name: "Name"
+        description: "Description"
+        created_at: "Created At"
+        updated_at: "Updated At"

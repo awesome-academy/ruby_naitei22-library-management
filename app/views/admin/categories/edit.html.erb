@@ -1,0 +1,7 @@
+<div class="card shadow-sm p-4">
+  <h3 class="mb-4 fw-bold"><%= t("admin.categories.edit_title") %></h3>
+  <%= render "form",
+        category: @category,
+        submit_text: t("admin.categories.actions.update"),
+        cancel_path: admin_category_path(@category) %>
+</div>

@@ -1,0 +1,12 @@
+<tr>
+  <td><%= category.id %></td>
+  <td class="text-center"><%= category.name %></td>
+  <td>
+    <%= link_to t("admin.categories.actions.view"), admin_category_path(category), class: "btn btn-sm btn-primary me-1" %>
+    <%= link_to t("admin.categories.actions.edit"), edit_admin_category_path(category), class: "btn btn-sm btn-success me-1" %>
+    <%= link_to t("admin.categories.actions.delete"), admin_category_path(category),
+                data: { turbo_method: :delete },
+                onclick: "return confirm('#{t("admin.categories.confirmations.delete")}');",
+                class: "btn btn-sm btn-danger" %>
+  </td>
+</tr>

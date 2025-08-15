@@ -1,0 +1,35 @@
+<% content_for :title, t("admin.categories.title") %>
+
+<h3 class="mb-3 fw-bold"><%= t("admin.categories.heading") %></h3>
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+  <%= link_to t("admin.categories.actions.add"), new_admin_category_path, class: "btn btn-warning fw-bold" %>
+
+  <div class="d-flex">
+    <%= search_form_for @q, url: admin_categories_path, method: :get, html: { class: "d-flex" } do |f| %>
+      <%= f.search_field :name_cont,
+        placeholder: t("admin.categories.placeholders.search"),
+        class: "form-control me-2" %>
+      <%= f.submit t("admin.categories.actions.search"), class: "btn btn-primary search-btn" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover table-bordered align-middle text-center">
+    <thead class="table-light">
+      <tr>
+        <th class="text-center"><%= t("admin.categories.attributes.id") %></th>
+        <th class="text-center"><%= t("admin.categories.attributes.name") %></th>
+        <th class="text-center"><%= t("admin.categories.attributes.action") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "category", collection: @categories, as: :category %>
+    </tbody>
+  </table>
+</div>
+
+<div class="d-flex justify-content-center mt-3">
+  <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+</div>
