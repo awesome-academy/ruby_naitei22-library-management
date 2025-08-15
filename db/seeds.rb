@@ -507,7 +507,6 @@ books = (1..30).to_a
     quantity: 1
   )
 end
-
 puts "🎉 Hoàn thành tạo dữ liệu mẫu!"
 puts "📊 Thống kê:"
 puts "- 📚 Sách: #{Book.count}"

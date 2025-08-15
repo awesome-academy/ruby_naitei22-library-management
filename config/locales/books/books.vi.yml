@@ -32,7 +32,8 @@ vi:
       unfavorite_success: "Đã bỏ sách khỏi mục yêu thích."
       unfavorite_failed: "Bỏ sách khỏi yêu thích thất bại."
       favorite_not_found: "Không tìm thấy sách trong mục yêu thích."
-
+      book_not_found: "Sách không tồn tại hoặc đã bị xóa."
+    
     favorite_button:
       unfavorite: "Bỏ yêu thích"
       add_to_favorite: "Thêm vào yêu thích"

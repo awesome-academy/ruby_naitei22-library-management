@@ -56,5 +56,11 @@ Rails.application.routes.draw do
         post :write_a_review
       end
     end
+    resources :authors, only: [:show] do
+      member do
+        post :add_to_favorite
+        delete :remove_from_favorite
+      end
+    end
   end
 end

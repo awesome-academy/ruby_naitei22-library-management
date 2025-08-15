@@ -103,7 +103,11 @@ write_a_review)
   private
 
   def set_book
-    @book = Book.find(params[:id])
+    @book = Book.find_by(id: params[:id])
+    return if @book
+
+    flash[:alert] = t(".book_not_found")
+    redirect_to root_path
   end
 
   def set_recommended_books
