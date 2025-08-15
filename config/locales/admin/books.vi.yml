@@ -55,6 +55,7 @@ vi:
         available_quantity: "Số lượng có sẵn"
         borrow_count: "Số lần mượn"
         created_at: "Ngày tạo"
+        category: "Thể loại"
         author: "Tác giả"
         publisher: "Nhà xuất bản"
         action: "Hành động"

@@ -54,6 +54,7 @@ en:
         total_quantity: "Total Quantity"
         available_quantity: "Available Quantity"
         borrow_count: "Borrow Count"
+        category: "Category"
         author: "Author"
         publisher: "Publisher"
         created_at: "Created At"

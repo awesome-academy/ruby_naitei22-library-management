@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       resources :books
       resources :authors
       resources :publishers
+      resources :categories
     end
     resources :books, only: [:show] do
       member do
