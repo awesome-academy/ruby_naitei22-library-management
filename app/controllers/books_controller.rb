@@ -74,11 +74,12 @@ write_a_review destroy_review)
       }
     end
 
+    flash[:success] = t(".added_to_borrow_cart")
+
     respond_to do |format|
       format.turbo_stream
       format.html do
-        redirect_to book_path @book,
-                              notice: t(".added_to_borrow_cart")
+        redirect_to book_path @book
       end
     end
   end
@@ -226,17 +227,6 @@ write_a_review destroy_review)
   def refresh_review_stats
     @review_counts = @book.reviews.group(:score).count
     @total_reviews = @book.reviews.count
-  end
-
-  def render_favorite_success format, message_key
-    format.turbo_stream do
-      render turbo_stream: turbo_stream.replace(
-        "favorite_button_#{@book.model_name.singular}_#{@book.id}",
-        partial: "books/favorite_button",
-        locals: {item: @book}
-      )
-    end
-    format.html {redirect_to @book, notice: t(".#{message_key}")}
   end
 
   def normalize_search_type search_type

@@ -38,6 +38,15 @@ vi:
     favorite_button:
       unfavorite: "Bỏ yêu thích"
       add_to_favorite: "Thêm vào yêu thích"
+    
+    add_to_favorite:
+      favorite_success: "Sách đã được thêm vào danh sách yêu thích."
+      favorite_failed: "Thêm sách vào danh sách yêu thích thất bại."
+
+    remove_from_favorite:
+      unfavorite_success: "Sách đã được xóa khỏi danh sách yêu thích."
+      unfavorite_failed: "Xóa sách khỏi danh sách yêu thích thất bại."
+      favorite_not_found: "Không tìm thấy sách trong danh sách yêu thích."
 
     borrow_modal:
       add_to_borrow_request: "Thêm vào yêu cầu mượn"
@@ -45,6 +54,9 @@ vi:
       available_quantity: "Số lượng hiện có"
       quantity: "Số lượng muốn mượn"
       add_to_borrow_list: "Thêm vào giỏ mượn"
+    
+    borrow:
+      added_to_borrow_cart: "Sách đã được thêm vào giỏ mượn"
     
     review_section:
       your_reviewed: "Bạn đã đánh giá"
@@ -61,8 +73,7 @@ vi:
       missing_score: "Vui lòng chọn số sao cho đánh giá!"
     
     destroy_review:
-      review_not_found: "Không tìm thấy đánh giá."
-      deleted: "Xóa đánh giá thành công."
+      deleted_success: "Xóa đánh giá thành công."
       delete_failed: "Xóa đánh giá thất bại."
 
     search:
