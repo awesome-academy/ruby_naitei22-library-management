@@ -1,0 +1,50 @@
+<h2><%= t(".title") %></h2>
+
+<p><strong><%= t(".reason_for_update") %>:</strong></p>
+<ul>
+  <% @borrow_request.need_update_reason.each do |reason| %>
+    <li><%= reason %></li>
+  <% end %>
+</ul>
+<%= form_with(model: @borrow_request,
+              url: update_request_borrow_list_path(@borrow_request),
+              method: :patch,
+              local: true) do |f| %>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th><%= t(".index") %></th>
+        <th><%= t(".book_image") %></th>
+        <th><%= t(".book_title") %></th>
+        <th><%= t(".book_author") %></th>
+        <th><%= t(".book_quantity") %></th>
+        <th><%= t(".book_available_quantity") %></th>
+        <th><%= t(".action") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @borrow_request.borrow_request_items.includes(:book).each_with_index do |item, index| %>
+        <%= f.fields_for :borrow_request_items, item do |item_form| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td>
+              <% if item.book&.image&.attached? %>
+                <%= image_tag item.book.image.variant(resize_to_limit: [80, 100]), class: "img-thumbnail" %>
+              <% else %>
+                <%= t(".no_image") %>
+              <% end %>
+            </td>
+            <td><%= item.book&.title %></td>
+            <td><%= item.book&.author&.name %></td>
+            <td><%= item_form.number_field :quantity, min: 1, value: item.quantity, class: "form-control w-50" %></td>
+            <td><%= item.book&.available_quantity%></td>
+            <td><%= item_form.check_box :_destroy %> <%= t(".remove_action") %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= f.submit t(".update_request"), class: "btn btn-primary mt-3" %>
+<% end %>

@@ -93,8 +93,8 @@ vi:
             admin_note:
               blank_if_rejected: "không được để trống khi trạng thái bị từ chối"
             actual_return_date:
-              blank_if_returned: "Ngày trả thực tế không được để trống khi trạng thái đã trả"
-              cannot_be_future: "Ngày trả thực tế không được sau ngày hiện tại"
+              blank_if_returned: "không được để trống khi trạng thái đã trả"
+              cannot_be_future: "không được sau ngày hiện tại"
               after_borrowed_date: "phải sau ngày mượn thực tế"
               before_end_date: "phải trước ngày kết thúc"
             phone_number:
@@ -110,3 +110,6 @@ vi:
               after_approved_date: "phải sau ngày phê duyệt"
               before_end_date: "phải trước ngày kết thúc"
               after_start_date: "phải sau ngày bắt đầu"
+            quantity:
+              blank: "không được để trống"
+              not_enough_stock: "không đủ trong kho"

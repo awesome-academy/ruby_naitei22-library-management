@@ -1,4 +1,6 @@
 class AuthorsController < ApplicationController
+  before_action :authenticate_user!,
+                only: %i(add_to_favorite remove_from_favorite)
   before_action :set_author,
                 only: %i(show add_to_favorite remove_from_favorite)
   before_action :set_book_by_author, only: :show

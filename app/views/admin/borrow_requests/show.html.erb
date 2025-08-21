@@ -58,6 +58,13 @@
           <% end %>
         </div>
 
+        <div class="col-md-12">
+          <label class="form-label"> <%= t(".status_info.need_update_reason_label") %></label>
+          <%= turbo_frame_tag "need_update_reason_#{@borrow_request.id}" do %>
+            <%= render "admin/borrow_requests/need_update_reason", borrow_request: @borrow_request %>
+          <% end %>
+        </div>
+
         <div class="col-md-6">
           <label class="form-label"> <%= t(".status_info.borrowed_by_label") %></label>
           <%= turbo_frame_tag "borrowed_by_#{@borrow_request.id}" do %>

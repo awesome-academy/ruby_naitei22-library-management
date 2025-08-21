@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "sessions#omniauth"
   post "/auth/:provider/callback", to: "sessions#omniauth"
   get "/auth/:provider", to: redirect { |params, request| "/auth/#{params[:provider]}" }, as: :auth_provider
+  devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
 
   scope "(:locale)", locale: /en|vi/ do
     namespace :admin do
@@ -88,6 +89,8 @@ Rails.application.routes.draw do
     resources :borrow_list, only: [:index, :show] do
       member do
         patch :cancel, to: "borrow_list#cancel", as: :cancel
+        get :edit_request, to: "borrow_list#edit_request", as: :edit_request
+        patch :update_request, to: "borrow_list#update_request", as: :update_request
       end
     end
   end

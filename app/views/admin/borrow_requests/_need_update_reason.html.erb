@@ -1,0 +1,4 @@
+<%= turbo_frame_tag "need_update_reason_#{borrow_request.id}" do %>
+  <input type="text" readonly class="form-control"
+    value="<%= borrow_request.need_update_reason.presence || t(".no_reason") %>">
+<% end %>

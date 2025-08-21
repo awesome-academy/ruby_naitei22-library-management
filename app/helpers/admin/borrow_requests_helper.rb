@@ -6,6 +6,7 @@ module Admin::BorrowRequestsHelper
     "borrowed" => "status-borrowed",
     "pending" => "status-pending",
     "approved" => "status-approved",
+    "need_update" => "status-need_update",
     "rejected" => "status-rejected",
     "returned" => "status-returned",
     "overdue" => "status-overdue"
@@ -27,6 +28,8 @@ module Admin::BorrowRequestsHelper
 
     allowed_statuses = case current_status.to_sym
                        when :pending
+                         %i(approved rejected cancelled need_update)
+                       when :need_update
                          %i(approved rejected cancelled)
                        when :approved
                          %i(borrowed)

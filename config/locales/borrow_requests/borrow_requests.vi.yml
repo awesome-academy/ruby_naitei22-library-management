@@ -49,6 +49,7 @@ vi:
           actual_return_date_label: "Ngày trả thực tế"
           actual_borrow_date_label: "Ngày mượn thực tế"
           approved_date_label: "Ngày duyệt"
+          need_update_reason_label: "Lý do cần cập nhật"
           admin_note_label: "Ghi chú của quản trị"
           approved_by_label: "Được duyệt bởi"
           rejected_by_label: "Bị từ chối bởi"
@@ -80,6 +81,8 @@ vi:
         not_available: "Trống"
       admin_note:
         no_note: "Trống"
+      need_update_reason:
+        no_reason: "N/A"
       approved_by:
         not_approved: "Chưa được xác nhận"
       borrowed_by:
@@ -106,3 +109,6 @@ vi:
           no_change_status: "Trạng thái không có thay đổi"
       flash:
         not_access: "Bạn không có quyền truy cập vào trang này"
+      errors:
+        not_enough_stock: "Sách %{title} chỉ còn %{stock} cuốn trong kho. Vui lòng cập nhật số lượng sách mượn."
+        mailer_failed: "Không thể gửi email %{status} yêu cầu mượn: %{error}"

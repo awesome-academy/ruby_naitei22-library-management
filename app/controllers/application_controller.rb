@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  include SessionsHelper
+  # include SessionsHelper
   include Pagy::Backend
   before_action :set_locale
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   private
 
@@ -21,11 +22,12 @@ class ApplicationController < ActionController::Base
     {locale: I18n.locale}
   end
 
-  def logged_in_user
-    return if logged_in?
+  protected
 
-    store_location
-    flash[:danger] = t("auth.please_login")
-    redirect_to login_url
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up,
+                                      keys: %i(name date_of_birth gender))
+    devise_parameter_sanitizer.permit(:account_update,
+                                      keys: %i(name date_of_birth gender))
   end
 end

@@ -9,12 +9,19 @@ gender).freeze
   FAVORITE_AUTHORS_INCLUDES = [:books, :favorites,
 {image_attachment: :blob}].freeze
 
-  has_secure_password
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable,
+         :rememberable,
+         :validatable,
+         :confirmable,
+         :omniauthable,
+         omniauth_providers: [:google_oauth2] #
+  # has_secure_password
   # has_secure_password cung cấp: # rubocop:disable Style/AsciiComments
   # - Các thuộc tính ảo: password, password_confirmation # rubocop:disable Style/AsciiComments
   # - Trường password_digest để lưu hash # rubocop:disable Style/AsciiComments
   # - Phương thức authenticate(password) để xác thực # rubocop:disable Style/AsciiComments
-  has_one_attached :avatar
 
   enum role: {user: 0, admin: 1, super_admin: 2}
   enum gender: {male: 0, female: 1, other: 2}
@@ -34,15 +41,9 @@ gender).freeze
            class_name: Favorite.name, dependent: :destroy
   has_many :followed_authors, through: :favorite_authors, source: :favorable,
            source_type: Author.name
-
   has_many :borrow_requests, dependent: :destroy
-
+  has_one_attached :avatar
   has_one_attached :image
-
-  attr_accessor :remember_token, :activation_token, :reset_token
-
-  before_save :downcase_email
-  before_create :create_activation_digest
 
   scope :recent, -> {order(created_at: :desc)}
   scope :order_by_created, -> {order(created_at: :asc)}
@@ -70,7 +71,6 @@ gender).freeze
                      length: {minimum: Settings.digits.digit_6},
                      allow_nil: true,
                      if: :password_required?
-  validate :password_presence_if_confirmation_provided
   validates :phone_number,
             format: {with: VALID_PHONE_REGEX, message: :invalid_phone_number},
             allow_blank: true
@@ -89,6 +89,14 @@ gender).freeze
       status
       created_at
     )
+  end
+
+  def active_for_authentication?
+    super && active?
+  end
+
+  def inactive_message
+    active? ? super : :account_inactive
   end
 
   def favorited? item
@@ -114,119 +122,36 @@ gender).freeze
     end
   end
 
-  def remember
-    self.remember_token = User.new_token
-    update_column :remember_digest, User.digest(remember_token)
-  end
-
-  def forget
-    update_column :remember_digest, nil
-  end
-
-  def authenticated? attribute, token
-    digest = send "#{attribute}_digest"
-    return false unless digest
-
-    BCrypt::Password.new(digest).is_password?(token)
-  end
-
-  def activate
-    update_column(:activated_at, Time.zone.now)
-  end
-
-  def activated?
-    activated_at.present?
-  end
-
-  def send_activation_email
-    UserMailer.account_activation(self).deliver_now
-  end
-
-  def send_password_reset_email
-    UserMailer.password_reset(self).deliver_now
-  end
-
-  def create_reset_digest
-    self.reset_token = User.new_token
-    update_columns reset_digest: User.digest(reset_token),
-                   reset_sent_at: Time.zone.now
-  end
-
-  def password_reset_expired?
-    reset_sent_at < Settings.mailer.expire_hour.hours.ago
-  end
-
-  class << self
-    def digest string
-      cost = if ActiveModel::SecurePassword.min_cost
-               BCrypt::Engine::MIN_COST
-             else
-               BCrypt::Engine.cost
-             end
-      BCrypt::Password.create(string, cost:)
-    end
-
-    def new_token
-      SecureRandom.urlsafe_base64
-    end
-  end
-
   def self.from_omniauth auth
-    user = find_by(email: auth.info.email)
+    user = find_existing_user(auth)
+    return update_user_provider(user, auth) if user
 
-    if user
+    create_user_from_omniauth(auth)
+  end
+
+  def self.find_existing_user auth
+    find_by(provider: auth.provider,
+            uid: auth.uid) || find_by(email: auth.info.email)
+  end
+
+  def self.update_user_provider user, auth
+    unless user.provider && user.uid
       user.update(provider: auth.provider, uid: auth.uid)
-      user
-    else
-      # New user - create account
-      create(
-        name: auth.info.name,
-        email: auth.info.email,
-        provider: auth.provider,
-        uid: auth.uid,
-        gender: :other,
-        date_of_birth: 18.years.ago.to_date,
-        status: :active,
-        activated_at: Time.current,
-        password: SecureRandom.hex(16)
-      )
     end
+    user
   end
 
-  def oauth_user?
-    provider.present?
-  end
-
-  def needs_password_setup?
-    oauth_user? && created_at == updated_at
-  end
-
-  private
-
-  def downcase_email
-    email.downcase!
-  end
-
-  def password_required?
-    return false if oauth_user? && new_record?
-
-    # For profile updates, only require password if it's being changed
-    if persisted? && password.blank? && password_confirmation.blank?
-      return false
-    end
-
-    (password_digest.blank? || !password.nil?) && !oauth_user?
-  end
-
-  def password_presence_if_confirmation_provided
-    if password.blank? && password_confirmation.present? # rubocop:disable Style/GuardClause
-      errors.add(:password, :password_blank)
-    end
-  end
-
-  def create_activation_digest
-    self.activation_token = User.new_token
-
-    self.activation_digest = User.digest(activation_token)
+  def self.create_user_from_omniauth auth
+    create!(
+      name: auth.info.name,
+      email: auth.info.email,
+      provider: auth.provider,
+      uid: auth.uid,
+      gender: :other,
+      date_of_birth: 18.years.ago.to_date,
+      status: :active,
+      password: Devise.friendly_token[0, 20],
+      confirmed_at: Time.current
+    )
   end
 end

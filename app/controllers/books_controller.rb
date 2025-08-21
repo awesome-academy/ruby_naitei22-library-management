@@ -1,4 +1,8 @@
 class BooksController < ApplicationController
+  before_action :authenticate_user!, only: %i(
+    add_to_favorite remove_from_favorite
+    write_a_review destroy_review borrow
+  )
   before_action :set_book,
                 only: %i(show borrow add_to_favorite remove_from_favorite
 write_a_review destroy_review)
