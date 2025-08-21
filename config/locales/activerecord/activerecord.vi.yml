@@ -22,6 +22,8 @@ vi:
           other: "Khác"
 
     errors:
+      messages:
+        blank: "không được để trống"
       models:
         user:
           attributes:

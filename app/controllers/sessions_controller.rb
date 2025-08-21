@@ -53,7 +53,7 @@ class SessionsController < ApplicationController
   end
 
   def check_activated
-    return if @user.activated_at.present?
+    return if @user.active?
 
     flash[:warning] = t(".not_activated")
     redirect_to root_url, status: :see_other
@@ -77,6 +77,12 @@ class SessionsController < ApplicationController
   end
 
   def handle_successful_oauth user
+    unless user.active?
+      flash[:warning] = t("sessions.create.not_activated")
+      redirect_to root_url, status: :see_other
+      return
+    end
+
     reset_session
     log_in user
     remember_session user

@@ -51,11 +51,12 @@ class Admin::AuthorsController < Admin::ApplicationController
 
   # DELETE /admin/authors/:id
   def destroy
-    if @author.destroy
+    if @author.books.exists?
+      flash[:alert] = t("admin.authors.flash.destroy.has_books")
+    elsif @author.destroy
       flash[:success] = t("admin.authors.flash.destroy.success")
     else
-      flash[:alert] = @author.errors.full_messages.to_sentence ||
-                      t("admin.authors.flash.destroy.failure")
+      flash[:alert] = t("admin.authors.flash.destroy.failure")
     end
     redirect_to admin_authors_path
   end

@@ -4,7 +4,7 @@ vi:
     create:
       invalid_email_or_password: "email hoặc mật khẩu không đúng"
       success: "Đăng nhập thành công"
-      not_activated: "Tài khoản của bạn chưa được kích hoạt. Vui lòng kiểm tra email để nhận liên kết kích hoạt."
+      not_activated: "Tài khoản của bạn chưa được kích hoạt."
     destroy:
       success: "Đăng xuất thành công"
     new:
