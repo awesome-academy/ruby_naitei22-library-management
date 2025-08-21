@@ -29,6 +29,7 @@ vi:
 
     view: "Xem"
     cancel: "Hủy"
+    update: "Cập nhật"
     confirm_cancel: "Bạn có chắc chắn muốn hủy yêu cầu này không?"
     not_found: "Không tìm thấy yêu cầu mượn."
     success: "Yêu cầu mượn đã được hủy."

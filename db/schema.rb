@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_08_19_153118) do
+ActiveRecord::Schema[7.0].define(version: 2025_08_21_075627) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -98,6 +98,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_19_153118) do
     t.date "actual_borrow_date"
     t.date "approved_date"
     t.bigint "borrowed_by_admin_id"
+    t.json "need_update_reason"
     t.index ["approved_by_admin_id"], name: "index_borrow_requests_on_approved_by_admin_id"
     t.index ["status"], name: "index_borrow_requests_on_status"
     t.index ["user_id"], name: "index_borrow_requests_on_user_id"

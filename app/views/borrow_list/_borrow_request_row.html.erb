@@ -11,11 +11,16 @@
   </td>
   <td>
     <%= link_to t("borrow_list.view"), borrow_list_path(req), class: "btn btn-sm btn-info" %>
-    <% if req.pending? %>
+    <% if req.pending?  || req.need_update? %>
       <%= link_to t("borrow_list.cancel"),
                   cancel_borrow_list_path(req),
                   data: { turbo_method: :patch, turbo_confirm: t("borrow_list.confirm_cancel") },
                   class: "btn btn-sm btn-danger" %>
+    <% end %>
+    <% if req.need_update? %>
+      <%= link_to t("borrow_list.update"),
+                  edit_request_borrow_list_path(req),
+                  class: "btn btn-sm btn-warning" %>
     <% end %>
   </td>
 </tr>

@@ -106,3 +106,6 @@ vi:
           no_change_status: "Trạng thái không có thay đổi"
       flash:
         not_access: "Bạn không có quyền truy cập vào trang này"
+      errors:
+        not_enough_stock: "Sách %{title} chỉ còn %{stock} cuốn trong kho. Vui lòng cập nhật số lượng sách mượn."
+        mailer_failed: "Không thể gửi email %{status} yêu cầu mượn: %{error}"

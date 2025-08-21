@@ -1,0 +1,521 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>app/models/book.rb</title>
+    <link href="./assets/0.3.7/screen.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="./assets/0.3.7/print.css" media="print" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <script type="text/javascript" src="./assets/0.3.7/rcov.js"></script>
+  </head>
+  <body>
+    <h1>Ruby naitei22-library-management C0 Coverage Information - Simploco - RCov</h1>
+    <h2>app/models/book.rb</h2>
+
+    <div class="report_table_wrapper">
+      <table class='report' id='report_table'>
+        <thead>
+          <tr>
+            <th class="left_align">Name</th>
+            <th class="right_align">Total Lines</th>
+            <th class="right_align">Lines of Code</th>
+            <th class="left_align">Total Coverage</th>
+            <th class="left_align">Code Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="left_align"><a href="app-models-book_rb.html">app/models/book.rb</a></td>
+            <td class='right_align'><tt>154</tt></td>
+            <td class='right_align'><tt>53</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>88.96%</tt></div>
+      <div class="percent_graph">
+        <div class="covered" style="width:89px"></div>
+        <div class="uncovered" style="width:11px"></div>
+      </div></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>67.92%</tt></div>
+      <div class="percent_graph">
+        <div class="covered" style="width:68px"></div>
+        <div class="uncovered" style="width:32px"></div>
+      </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Key</h3>
+
+    <div class="key"><pre><span class='marked'>Code reported as executed by Ruby looks like this...</span><span class='marked1'>and this: this line is also marked as covered.</span><span class='inferred'>Lines considered as run by rcov, but not reported by Ruby, look like this,</span><span class='inferred1'>and this: these lines were inferred by rcov (using simple heuristics).</span><span class='uncovered'>Finally, here's a line marked as not executed.</span></pre></div>
+
+    <h3>Coverage Details</h3>
+
+    <table class="details">
+      <tbody>
+        <tr class="marked">
+          <td><pre><a name="line2">2</a> class Book &lt; ApplicationRecord</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line3">3</a>   MAX_TITLE_LENGTH = 255</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line4">4</a>   MAX_DESCRIPTION_LENGTH = 1500</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line5">5</a>   MIN_PUBLICATION_YEAR = 1000</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line6">6</a>   MIN_TOTAL_QUANTITY = 0</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line7">7</a>   MIN_AVAILABLE_QUANTITY = 0</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line8">8</a>   MIN_BORROW_COUNT = 0</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line9">9</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line10">10</a>   BORROWED_SELECT_FIELDS = &lt;&lt;~SQL.squish</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line11">11</a>     books.id,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line12">12</a>     books.title,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line13">13</a>     books.total_quantity,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line14">14</a>     books.available_quantity,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line15">15</a>     books.author_id,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line16">16</a>     COUNT(borrow_requests.id) AS borrow_count</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line17">17</a>   SQL</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line18">18</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line19">19</a>   BORROWED_GROUP_FIELDS = &lt;&lt;~SQL.squish</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line20">20</a>     books.id,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line21">21</a>     books.title,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line22">22</a>     books.total_quantity,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line23">23</a>     books.available_quantity,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line24">24</a>     books.author_id</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line25">25</a>   SQL</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line26">26</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line27">27</a>   has_one_attached :image</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line28">28</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line29">29</a>   belongs_to :author</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line30">30</a>   belongs_to :publisher</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line31">31</a>   has_many :book_categories, dependent: :destroy</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line32">32</a>   has_many :categories, through: :book_categories</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line33">33</a>   has_many :borrow_request_items, dependent: :restrict_with_error</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line34">34</a>   has_many :borrow_requests, through: :borrow_request_items</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line35">35</a>   has_many :reviews, dependent: :destroy</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line36">36</a>   has_many :favorites, as: :favorable, dependent: :destroy</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line37">37</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line38">38</a>   validates :title,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line39">39</a>             presence: true,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line40">40</a>             length: {</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line41">41</a>               maximum: MAX_TITLE_LENGTH</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line42">42</a>             }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line43">43</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line44">44</a>   validates :description,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line45">45</a>             length: {</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line46">46</a>               maximum: MAX_DESCRIPTION_LENGTH</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line47">47</a>             },</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line48">48</a>             allow_blank: true</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line49">49</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line50">50</a>   validates :publication_year,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line51">51</a>             numericality: {</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line52">52</a>               only_integer: true,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line53">53</a>               greater_than: MIN_PUBLICATION_YEAR</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line54">54</a>             },</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line55">55</a>             allow_nil: true</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line56">56</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line57">57</a>   validates :total_quantity,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line58">58</a>             presence: true,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line59">59</a>             numericality: {</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line60">60</a>               only_integer: true,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line61">61</a>               greater_than: MIN_TOTAL_QUANTITY</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line62">62</a>             }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line63">63</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line64">64</a>   validates :available_quantity,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line65">65</a>             presence: true,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line66">66</a>             numericality: {</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line67">67</a>               only_integer: true,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line68">68</a>               greater_than_or_equal_to: MIN_AVAILABLE_QUANTITY,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line69">69</a>               less_than_or_equal_to: :total_quantity</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line70">70</a>             }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line71">71</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line72">72</a>   validates :borrow_count,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line73">73</a>             presence: true,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line74">74</a>             numericality: {</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line75">75</a>               only_integer: true,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line76">76</a>               greater_than_or_equal_to: MIN_BORROW_COUNT</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line77">77</a>             }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line78">78</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line79">79</a>   validates :author_id,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line80">80</a>             presence: true</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line81">81</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line82">82</a>   validates :publisher_id,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line83">83</a>             presence: true</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line84">84</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line85">85</a>   scope :by_author, -&gt;(author_id) {where(author_id:)}</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line86">86</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line87">87</a>   scope :exclude_book, -&gt;(book_id) {where.not(id: book_id)}</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line88">88</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line89">89</a>   scope :recent, -&gt; {order(created_at: :desc)}</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line90">90</a>   scope :with_cover, -&gt; {joins(:image_attachment)}</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line91">91</a>   scope :without_cover, (lambda do</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line92">92</a>     left_joins(:image_attachment)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line93">93</a>       .where(active_storage_attachments: {id: nil})</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line94">94</a>   end)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line95">95</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line96">96</a>   scope :most_borrowed, lambda {|month: nil, year: nil|</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line97">97</a>     joins(:borrow_requests)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line98">98</a>       .then do |q|</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line99">99</a>         if year.present?</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line100">100</a>           q = q.where(</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line101">101</a>             &quot;EXTRACT(YEAR FROM borrow_requests.request_date) = ?&quot;, year</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line102">102</a>           )</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line103">103</a>         end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line104">104</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line105">105</a>         if month.present?</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line106">106</a>           q = q.where(</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line107">107</a>             &quot;EXTRACT(MONTH FROM borrow_requests.request_date) = ?&quot;, month</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line108">108</a>           )</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line109">109</a>         end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line110">110</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line111">111</a>         q</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line112">112</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line113">113</a>       .select(BORROWED_SELECT_FIELDS)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line114">114</a>       .group(BORROWED_GROUP_FIELDS)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line115">115</a>       .order(&quot;borrow_count DESC&quot;)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line116">116</a>   }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line117">117</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line118">118</a>   scope :recommended, -&gt; {order(publication_year: :desc)}</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line119">119</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line120">120</a>   def average_rating</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line121">121</a>     return Settings.digits.digit_0 if reviews.empty?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line122">122</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line123">123</a>     reviews.average(:score).round(1)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line124">124</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line125">125</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line126">126</a>   def self.ransackable_attributes(*)</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line127">127</a>     %w(title)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line128">128</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line129">129</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line130">130</a>   scope :search, lambda {|query, search_type = :all|</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line131">131</a>     return none if query.blank?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line132">132</a> </pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line133">133</a>     case search_type.to_sym</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line134">134</a>     when :title</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line135">135</a>       where(&quot;books.title LIKE ?&quot;, &quot;%#{query}%&quot;)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line136">136</a>     when :author</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line137">137</a>       joins(:author).where(&quot;authors.name LIKE ?&quot;, &quot;%#{query}%&quot;)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line138">138</a>     when :publisher</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line139">139</a>       joins(:publisher).where(&quot;publishers.name LIKE ?&quot;, &quot;%#{query}%&quot;)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line140">140</a>     when :category</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line141">141</a>       joins(:categories).where(&quot;categories.name LIKE ?&quot;, &quot;%#{query}%&quot;)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line142">142</a>     else # :all or any other value</pre></td>
+        </tr>
+        <tr class="uncovered">
+          <td><pre><a name="line143">143</a>       joins(:author, :publisher)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line144">144</a>         .left_joins(:categories)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line145">145</a>         .where(</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line146">146</a>           &quot;books.title LIKE :query OR</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line147">147</a>            authors.name LIKE :query OR</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line148">148</a>            publishers.name LIKE :query OR</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line149">149</a>            categories.name LIKE :query&quot;,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line150">150</a>           query: &quot;%#{query}%&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line151">151</a>         )</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line152">152</a>         .distinct</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line153">153</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line154">154</a>   }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line155">155</a> end</pre></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Generated on 2025-08-25 17:54:18 +0000 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.7</a></p>
+
+  </body>
+</html>
