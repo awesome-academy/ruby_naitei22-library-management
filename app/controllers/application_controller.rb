@@ -26,6 +26,6 @@ class ApplicationController < ActionController::Base
 
     store_location
     flash[:danger] = t("auth.please_login")
-    redirect_to login_url
+    redirect_to new_user_session_path
   end
 end

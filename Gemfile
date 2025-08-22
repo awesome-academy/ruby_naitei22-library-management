@@ -13,6 +13,8 @@ gem "faker", "2.21.0"
 
 gem "pagy", "~> 6.0"
 
+gem "devise"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.5"
 
