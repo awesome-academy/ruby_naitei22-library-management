@@ -4,6 +4,9 @@ en:
       confirmed: "Your email address has been successfully confirmed."
       send_instructions: "You will receive an email with instructions on how to confirm your email address in a few minutes."
       send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions on how to confirm it in a few minutes."
+      new:
+        title: "Resend confirmation instructions"
+        submit: "Send confirmation instructions"
     failure:
       already_authenticated: "You are already signed in."
       inactive: "Your account has not been activated yet."
@@ -17,18 +20,21 @@ en:
     mailer:
       confirmation_instructions:
         subject: "Confirmation instructions"
+        greeting: "Welcome %{email}!"
+        instruction: "You can confirm your account email through the link below:"
+        action: "Confirm my account"
       reset_password_instructions:
         subject: "Reset password instructions"
-      email_changed:
-        subject: "Email changed"
-      password_change:
-        subject: "Password changed"
       unlock_instructions:
         subject: "Unlock instructions"
         greeting: "Hello %{email}!"
         message: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
         instruction: "Click the link below to unlock your account:"
         link_unlock: "Unlock link"
+      email_changed:
+        subject: "Email changed"
+      password_change:
+        subject: "Password changed"
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
       success: "Successfully authenticated from %{kind} account."

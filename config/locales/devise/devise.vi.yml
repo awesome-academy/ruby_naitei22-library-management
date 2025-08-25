@@ -4,6 +4,9 @@ vi:
       confirmed: "Địa chỉ email của bạn đã được xác nhận thành công."
       send_instructions: "Bạn sẽ nhận được email hướng dẫn cách xác nhận địa chỉ email trong vài phút."
       send_paranoid_instructions: "Nếu địa chỉ email của bạn tồn tại trong cơ sở dữ liệu của chúng tôi, bạn sẽ nhận được email hướng dẫn cách xác nhận địa chỉ email trong vài phút."
+      new:
+        title: "Gửi lại hướng dẫn xác nhận"
+        submit: "Gửi hướng dẫn xác nhận"
     failure:
       already_authenticated: "Bạn đã đăng nhập rồi."
       inactive: "Tài khoản của bạn chưa được kích hoạt."
@@ -17,6 +20,9 @@ vi:
     mailer:
       confirmation_instructions:
         subject: "Hướng dẫn xác nhận"
+        greeting: "Chào mừng %{email}!"
+        instruction: "Bạn có thể xác nhận email của tài khoản qua liên kết bên dưới:"
+        action: "Xác nhận tài khoản của tôi"
       reset_password_instructions:
         subject: "Hướng dẫn đặt lại mật khẩu"
       email_changed:
