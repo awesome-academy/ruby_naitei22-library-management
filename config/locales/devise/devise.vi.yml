@@ -25,6 +25,11 @@ vi:
         action: "Xác nhận tài khoản của tôi"
       reset_password_instructions:
         subject: "Hướng dẫn đặt lại mật khẩu"
+        greeting: "Xin chào %{email}!"
+        message: "Có ai đó đã yêu cầu một liên kết để đổi mật khẩu của bạn. Bạn có thể thực hiện điều này qua liên kết bên dưới:"
+        change_password: "Đổi mật khẩu của tôi"
+        ignore_message: "Nếu bạn không yêu cầu điều này, vui lòng bỏ qua email này."
+        no_change: "Mật khẩu của bạn sẽ không thay đổi cho đến khi bạn truy cập vào liên kết trên và đặt lại mật khẩu mới."
       email_changed:
         subject: "Email đã được thay đổi"
       password_change:
