@@ -22,12 +22,12 @@ class AuthorsController < ApplicationController
         end
         format.html do
           redirect_to author_path(@author),
-                      notice: t(".favorite_success")
+                      notice: t("authors.show.favorite_success")
         end
       else
         format.html do
           redirect_to author_path(@author),
-                      alert: t(".favorite_failed")
+                      alert: t("authors.show.favorite_failed")
         end
       end
     end
@@ -46,12 +46,12 @@ class AuthorsController < ApplicationController
         end
         format.html do
           redirect_to author_path(@author),
-                      notice: t(".unfavorite_success")
+                      notice: t("authors.show.unfavorite_success")
         end
       else
         format.html do
           redirect_to author_path(@author),
-                      alert: t(".unfavorite_failed")
+                      alert: t("authors.show.unfavorite_failed")
         end
       end
     end
@@ -62,7 +62,7 @@ class AuthorsController < ApplicationController
     @author = Author.find_by(id: params[:id])
     return if @author
 
-    flash[:alert] = t(".author_not_found")
+    flash[:alert] = t("authors.show.author_not_found")
     redirect_to root_path
   end
 
@@ -80,7 +80,7 @@ class AuthorsController < ApplicationController
     @favorite = current_user.favorites.find_by(favorable: @author)
     return if @favorite
 
-    flash[:alert] = t(".favorite_not_found")
+    flash[:alert] = t("authors.show.favorite_not_found")
     redirect_to author_path(@author)
   end
 end

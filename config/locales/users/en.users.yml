@@ -10,7 +10,7 @@ en:
       submit: "Submit"
       create_account: "Create account"
     create:
-      success: "User was successfully created."
+      confirmation_sent: "Please check email to activation"
       error: "Error!"
     edit:
       title: "Update your profile"

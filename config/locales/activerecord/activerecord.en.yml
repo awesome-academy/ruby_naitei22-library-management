@@ -22,6 +22,8 @@ en:
           other: "Other"
 
     errors:
+      messages:
+        blank: "can't be blank"
       models:
         user:
           attributes:
