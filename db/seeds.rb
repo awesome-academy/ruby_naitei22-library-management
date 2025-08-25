@@ -45,7 +45,8 @@ admin = User.create!(
   date_of_birth: Date.new(1990, 1, 1),
   gender: "male",
   role: "admin",
-  activated_at: Time.zone.now
+  confirmed_at: Time.zone.now,
+  status: "active"
 )
 
 puts "👥 Đang tạo người dùng thường..."
@@ -88,7 +89,8 @@ users = [
     password_confirmation: "123456",
     gender: u[:gender],
     date_of_birth: Date.parse(u[:dob]),
-    activated_at: Time.zone.now
+    confirmed_at: Time.zone.now,
+    status: "active"
   )
 end
 

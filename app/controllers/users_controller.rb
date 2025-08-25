@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user,
-                only: %i(show edit update setup_password update_password)
+  before_action :authenticate_user!
   before_action :load_user, only: %i(show edit update follows)
   before_action :correct_user, only: %i(show edit update)
   before_action :require_password_setup,
@@ -113,7 +112,7 @@ blob).freeze
   end
 
   def correct_user
-    return if current_user? @user
+    return if @user == current_user
 
     flash[:error] = t(".not_correct_user")
     redirect_to root_url

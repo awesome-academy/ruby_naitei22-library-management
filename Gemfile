@@ -71,6 +71,8 @@ gem "sassc-rails"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html
   gem "debug", platforms: %i(mri mingw x64_mingw)
+  gem "factory_bot_rails"
+  gem "rspec-rails"
   gem "rubocop", "~> 1.26", require: false
   gem "rubocop-checkstyle_formatter", require: false
   gem "rubocop-rails", "~> 2.14.0", require: false
@@ -90,7 +92,10 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html]
   gem "capybara"
+  gem "rails-controller-testing"
   gem "selenium-webdriver"
+  gem "simplecov"
+  gem "simplecov-rcov"
   gem "webdrivers"
 end
 
@@ -98,5 +103,6 @@ gem "ransack"
 gem "ruby-lsp", "~> 0.26.1"
 
 gem "chartkick"
+gem "devise"
 gem "groupdate"
 gem "whenever", require: false
