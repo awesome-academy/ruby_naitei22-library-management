@@ -41,3 +41,4 @@ vi:
         destroy:
           success: "Tác giả đã được xóa thành công."
           failure: "Xóa tác giả thất bại."
+          has_books: "Không thể xóa tác giả vì còn sách liên kết."

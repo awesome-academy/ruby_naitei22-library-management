@@ -39,7 +39,7 @@ class BorrowRequest < ApplicationRecord
   }
 
   OVERDUE = "end_date < :now AND status = :borrowed".freeze
-  EXPIRED = "end_date < :now AND status = :pending".freeze
+  EXPIRED = "start_date < :now AND status = :pending".freeze
   delegate :name, :email, :avatar, to: :user, prefix: true
   delegate :name, to: :approved_by_admin, prefix: true, allow_nil: true
   delegate :name, to: :rejected_by_admin, prefix: true, allow_nil: true

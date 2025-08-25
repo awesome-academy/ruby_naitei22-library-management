@@ -41,3 +41,4 @@ en:
         destroy:
           success: "Author was successfully deleted."
           failure: "Failed to delete author."
+          has_books: "Cannot delete this author because books are still associated."
