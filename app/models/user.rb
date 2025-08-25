@@ -4,6 +4,8 @@ gender).freeze
   USER_OAUTH_SETUP_PERMIT = %i(password password_confirmation date_of_birth
 gender).freeze
   USER_PERMIT_FOR_PASSWORD_RESET = %i(password password_confirmation).freeze
+  USER_PERMIT_FOR_PROFILE = %i(name email password password_confirmation
+gender date_of_birth phone_number address).freeze
   FAVORITE_BOOKS_INCLUDES = [:author, :publisher, :categories,
 {image_attachment: :blob}].freeze
   FAVORITE_AUTHORS_INCLUDES = [:books, :favorites,

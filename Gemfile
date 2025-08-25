@@ -58,6 +58,7 @@ gem "bootsnap", require: false
 # Use Sass to process CSS
 gem "bootstrap-sass", "3.4.1"
 gem "config"
+gem "devise"
 gem "figaro"
 gem "omniauth"
 gem "omniauth-google-oauth2"
@@ -71,9 +72,14 @@ gem "sassc-rails"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html
   gem "debug", platforms: %i(mri mingw x64_mingw)
+  gem "factory_bot_rails"
+  gem "rails-controller-testing"
+  gem "rspec-rails"
   gem "rubocop", "~> 1.26", require: false
   gem "rubocop-checkstyle_formatter", require: false
   gem "rubocop-rails", "~> 2.14.0", require: false
+  gem "shoulda-matchers"
+  gem "simplecov", require: false
 end
 
 group :development do
