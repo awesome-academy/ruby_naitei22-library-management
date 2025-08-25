@@ -56,7 +56,7 @@ en:
     user:
       delete: "Delete"
       are_you_sure?: "Are you sure to delete this user ?"
-    setup_password:
+    new_with_omniauth:
       setup_password: "Complete Account Setup"
       password: "Password"
       confirm_password: "Confirm Password"
@@ -64,6 +64,7 @@ en:
       gender: "Gender"
       select_gender: "Select your gender"
       complete_setup: "Complete Setup"
+      require_google_login: "You must log in with Google first."
     favorites:
       page_title: "My Favorite Books"
       my_favorites: "My Favorite Books"

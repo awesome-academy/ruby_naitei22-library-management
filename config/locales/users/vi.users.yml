@@ -56,7 +56,7 @@ vi:
     user:
       delete: "Xóa"
       are_you_sure?: "Bạn chắc chắn muốn xóa người dùng này ?"
-    setup_password:
+    new_with_omniauth:
       setup_password: "Hoàn Tất Thiết Lập Tài Khoản"
       password: "Mật khẩu"
       confirm_password: "Xác nhận mật khẩu"
@@ -64,6 +64,7 @@ vi:
       gender: "Giới tính"
       select_gender: "Chọn giới tính"
       complete_setup: "Hoàn tất thiết lập"
+      require_google_login: "Bạn cần đăng nhập bằng Google trước."
     favorites:
       page_title: "Sách Yêu Thích Của Tôi"
       my_favorites: "Sách Yêu Thích Của Tôi"

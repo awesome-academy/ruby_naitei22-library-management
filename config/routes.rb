@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: "sessions",
-    registrations: "users/registrations"
+    registrations: "users/registrations",
+    omniauth_callbacks: "users/omniauth_callbacks"
   }
 
   scope "(:locale)", locale: /en|vi/ do
+    devise_scope :user do
+      get  "users/sign_up/omniauth", to: "users/registrations#new_with_omniauth",
+                                    as: :new_user_registration_with_omniauth
+      post "users/sign_up/omniauth", to: "users/registrations#create_with_omniauth",
+                                    as: :user_registration_with_omniauth
+    end
+
     namespace :admin do
       resources :users, only: [:index, :show] do
         member do
@@ -31,8 +39,6 @@ Rails.application.routes.draw do
       member do
         get :favorites
         get :follows
-        get :setup_password
-        patch :update_password
       end
     end
 

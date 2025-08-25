@@ -11,3 +11,7 @@ vi:
       login_with_google: "Đăng nhập bằng Google"
       new_user: "Người dùng mới?"
       sign_up_now: "Đăng ký ngay!"
+
+    google_oauth2:
+      oauth_error: "Có lỗi khi đăng nhập bằng Google. Vui lòng thử lại."
+    oauth_error: "Có lỗi khi đăng nhập. Vui lòng thử lại."

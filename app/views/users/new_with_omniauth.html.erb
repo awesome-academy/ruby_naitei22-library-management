@@ -1,0 +1,39 @@
+<% provide :title, t(".setup_password") %>
+<h1 class="text-center"><%= t(".setup_password") %></h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with model: @user, url: user_registration_with_omniauth_path, local: true do |f| %>
+      <%= render "shared/error_messages" %>
+
+      <%= f.hidden_field :name, value: @user.name %>
+      <%= f.hidden_field :email, value: @user.email %>
+
+      <div class="form-group">
+        <%= f.label :password, t(".password") %>
+        <%= f.password_field :password, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password_confirmation, t(".confirm_password") %>
+        <%= f.password_field :password_confirmation, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :date_of_birth, t(".date_of_birth") %>
+        <%= f.date_field :date_of_birth, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :gender, t(".gender") %>
+        <%= f.select :gender,
+                    User.genders.keys.map { |key| [t("activerecord.attributes.user.genders.#{key}"), key] },
+                    { prompt: t(".select_gender") },
+                    { class: "form-control" } %>
+      </div>
+
+
+      <%= f.submit t(".complete_setup"), class: "btn btn-primary btn-block" %>
+    <% end %>
+  </div>
+</div>

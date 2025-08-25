@@ -11,3 +11,7 @@ en:
       login_with_google: "Login with Google"
       new_user: "New user?"
       sign_up_now: "Sign up now!"
+    
+    google_oauth2:
+      oauth_error: "There was a problem signing you in through Google. Please try again."
+    oauth_error: "There was a problem with your login. Please try again."

@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   USER_PERMIT = %i(name email password password_confirmation date_of_birth
 gender).freeze
+  USER_PERMIT_FOR_PROFILE = %i(name email gender date_of_birth phone_number
+address password password_confirmation).freeze
   USER_OAUTH_SETUP_PERMIT = %i(password password_confirmation date_of_birth
 gender).freeze
   USER_PERMIT_FOR_PASSWORD_RESET = %i(password password_confirmation).freeze
@@ -10,7 +12,8 @@ gender).freeze
 {image_attachment: :blob}].freeze
 
   devise :database_authenticatable, :rememberable, :validatable,
-         :confirmable, :lockable, :recoverable, :registerable
+         :confirmable, :lockable, :recoverable, :registerable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
 
   has_one_attached :avatar
 
