@@ -1,24 +1,13 @@
+# config/locales/vi.sessions.yml
 vi:
   sessions:
-    not_found: "Không tìm thấy người dùng"
-    create:
-      invalid_email_or_password: "email hoặc mật khẩu không đúng"
-      success: "Đăng nhập thành công"
-      not_activated: "Tài khoản của bạn chưa được kích hoạt. Vui lòng kiểm tra email để nhận liên kết kích hoạt."
-    destroy:
-      success: "Đăng xuất thành công"
     new:
       log_in: "Đăng nhập"
       email: "Email"
       password: "Mật khẩu"
       forgot_password: "(quên mật khẩu)"
-      remember_me: "Nhớ tôi trên máy tính này"
+      remember_me: "Ghi nhớ tôi trên máy này"
       or: "HOẶC"
-      login_with_google: "Đăng nhập với Google"
+      login_with_google: "Đăng nhập bằng Google"
       new_user: "Người dùng mới?"
       sign_up_now: "Đăng ký ngay!"
-    omniauth:
-      setup_password_required: "Vui lòng hoàn tất thiết lập tài khoản bằng cách thêm mật khẩu."
-      oauth_success: "Đăng nhập Google thành công!"
-      oauth_error: "Có lỗi xảy ra với xác thực Google. Vui lòng thử lại."
-      oauth_failure: "Xác thực OAuth không thành công. Vui lòng thử lại."

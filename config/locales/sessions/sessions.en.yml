@@ -1,12 +1,6 @@
+# config/locales/en.sessions.yml
 en:
   sessions:
-    not_found: "User not found"
-    create:
-      invalid_email_or_password: "invalid email or password"
-      success: "Login Successful"
-      not_activated: "Your account is not activated. Please check your email for the activation link."
-    destroy:
-      success: "Logout Successful"
     new:
       log_in: "Log in"
       email: "Email"
@@ -17,8 +11,3 @@ en:
       login_with_google: "Login with Google"
       new_user: "New user?"
       sign_up_now: "Sign up now!"
-    omniauth:
-      setup_password_required: "Please complete your account setup by adding a password."
-      oauth_success: "Successfully logged in with Google!"
-      oauth_error: "There was an error with Google authentication. Please try again."
-      oauth_failure: "OAuth authentication failed. Please try again."

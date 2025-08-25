@@ -45,12 +45,12 @@ admin = User.create!(
   date_of_birth: Date.new(1990, 1, 1),
   gender: "male",
   role: "admin",
-  activated_at: Time.zone.now
+  confirmed_at: Time.zone.now
 )
 
 puts "👥 Đang tạo người dùng thường..."
 users = [
-  { name: "Nguyễn Văn An", email: "nguyenvanan@example.com", gender: "male", dob: "1990-01-12" },
+  { name: "Nguyễn Văn An", email: "truongducquangk6@gmail.com", gender: "male", dob: "1990-01-12" },
   { name: "Trần Thị Hoa", email: "tranthihoa@example.com", gender: "female", dob: "1992-03-25" },
   { name: "Lê Văn Minh", email: "levanminh@example.com", gender: "male", dob: "1988-07-09" },
   { name: "Phạm Thị Hồng", email: "phamthihong@example.com", gender: "female", dob: "1995-10-14" },
@@ -88,7 +88,7 @@ users = [
     password_confirmation: "123456",
     gender: u[:gender],
     date_of_birth: Date.parse(u[:dob]),
-    activated_at: Time.zone.now
+    confirmed_at: Time.zone.now
   )
 end
 
