@@ -10,7 +10,7 @@ gender).freeze
 {image_attachment: :blob}].freeze
 
   devise :database_authenticatable, :rememberable, :validatable,
-         :lockable, :recoverable, :registerable
+         :confirmable, :lockable, :recoverable, :registerable
 
   has_one_attached :avatar
 

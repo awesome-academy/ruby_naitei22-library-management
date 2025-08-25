@@ -44,6 +44,8 @@ en:
       select_gender: "Select gender"
     form:
       confirmation: "Password Confirmation"
+      signup_with_google: "Signup with google"
+      or: "Or"
     update:
       profile_updated_successfully: "Profile updated successfully!"
     index:

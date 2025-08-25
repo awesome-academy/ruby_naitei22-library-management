@@ -44,6 +44,8 @@ vi:
       select_gender: "Chọn giới tính"
     form:
       confirmation: "Xác nhận mật khẩu"
+      signup_with_google: "Tạo tài khoản với google"
+      or: "Hoặc"
     update:
       profile_updated_successfully: "Cập nhật hồ sơ thành công!"
     index:
