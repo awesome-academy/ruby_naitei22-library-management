@@ -25,6 +25,11 @@ en:
         action: "Confirm my account"
       reset_password_instructions:
         subject: "Reset password instructions"
+        greeting: "Hello %{email}!"
+        message: "Someone has requested a link to change your password. You can do this through the link below:"
+        change_password: "Change my password"
+        ignore_message: "If you didn’t request this, please ignore this email."
+        no_change: "Your password won’t change until you access the link above and set a new one."
       unlock_instructions:
         subject: "Unlock instructions"
         greeting: "Hello %{email}!"
