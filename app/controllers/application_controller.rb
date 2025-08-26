@@ -1,8 +1,17 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  include SessionsHelper
   include Pagy::Backend
   before_action :set_locale
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  protected
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i(name phone_number))
+    devise_parameter_sanitizer.permit(
+      :account_update,
+      keys: %i(name phone_number)
+    )
+  end
 
   private
 
@@ -21,11 +30,15 @@ class ApplicationController < ActionController::Base
     {locale: I18n.locale}
   end
 
-  def logged_in_user
-    return if logged_in?
+  def after_sign_in_path_for resource
+    if resource.admin?
+      admin_report_path
+    else
+      stored_location_for(resource) || user_path(resource)
+    end
+  end
 
-    store_location
-    flash[:danger] = t("auth.please_login")
-    redirect_to login_url
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, alert: t("cancan.access_denied")
   end
 end

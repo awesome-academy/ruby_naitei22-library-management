@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user,
-                only: %i(show edit update setup_password update_password)
-  before_action :load_user, only: %i(show edit update follows)
-  before_action :correct_user, only: %i(show edit update)
+  load_and_authorize_resource
+  before_action :authenticate_user!
   before_action :require_password_setup,
                 only: %i(setup_password update_password)
 
@@ -32,13 +30,10 @@ blob).freeze
   def show; end
 
   # GET /users/:id/edit
-  def edit
-    @user = current_user
-  end
+  def edit; end
 
   # PATCH/PUT /users/:id
   def update
-    @user = current_user
 
     # Remove blank password fields to avoid validation issues
     update_params = profile_params
@@ -58,7 +53,8 @@ blob).freeze
 
   # GET /users/:id/favorites
   def favorites
-    @user = current_user
+
+    authorize! :favorites, @user
     @pagy, @favorite_books = pagy(
       @user.ordered_favorite_books_with_includes,
       items: Settings.pagy.items
@@ -69,6 +65,8 @@ blob).freeze
 
   # GET /users/:id/follows
   def follows
+    authorize! :follows, @user
+
     authors_with_includes = @user.ordered_favorite_authors_with_includes
 
     @pagy, @favorite_authors = pagy(authors_with_includes,
@@ -96,27 +94,12 @@ blob).freeze
 
   private
 
-  def load_user
-    @user = User.find_by id: params[:id]
-    return if @user
-
-    flash[:warning] = t(".not_found")
-    redirect_to root_path, status: :see_other
-  end
-
   def user_params
     params.require(:user).permit(User::USER_PERMIT)
   end
 
   def profile_params
     params.require(:user).permit(User::USER_PERMIT_FOR_PROFILE)
-  end
-
-  def correct_user
-    return if current_user? @user
-
-    flash[:error] = t(".not_correct_user")
-    redirect_to root_url
   end
 
   def send_activation_email

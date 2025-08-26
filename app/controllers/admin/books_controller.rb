@@ -1,4 +1,6 @@
 class Admin::BooksController < Admin::ApplicationController
+  before_action -> { authorize! :manage, :admin_books }
+
   PERMITTED_BOOK_PARAMS = [
     :title,
     :description,

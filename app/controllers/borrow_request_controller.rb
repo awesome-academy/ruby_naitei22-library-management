@@ -1,5 +1,5 @@
 class BorrowRequestController < ApplicationController
-  before_action :logged_in_user
+  before_action :authenticate_user!
   before_action :ensure_books_selected, only: :checkout
   before_action :ensure_valid_dates, only: :checkout
   before_action :ensure_sufficient_books, only: :checkout
@@ -53,6 +53,7 @@ class BorrowRequestController < ApplicationController
 
   # POST /borrow_request/checkout
   def checkout
+    authorize! :checkout, BorrowRequest
     create_borrow_request(@selected_books, @start_date, @end_date)
     clear_checked_out_books(@selected_books)
 
@@ -143,7 +144,7 @@ class BorrowRequestController < ApplicationController
     @start_date, @end_date = parse_start_and_end_dates
     return if valid_dates?(@start_date, @end_date)
 
-    redirect_to borrow_request_index_path
+    redirect_to borrow_request_index_path and return
   end
 
   def ensure_sufficient_books

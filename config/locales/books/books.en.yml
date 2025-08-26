@@ -95,6 +95,8 @@ en:
       items_per_page:
         one: "%{count} item per page"
         other: "%{count} items per page"
+    write_a_review:
+      not_borrowed: "You cannot write a review because you haven't borrowed this book."
 
   topbar:
     search_placeholder: "Search books..."

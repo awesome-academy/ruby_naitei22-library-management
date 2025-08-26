@@ -25,9 +25,11 @@
       </div>
     <% else %>
       <!-- Chưa có review -->
-      <button id="writeReviewBtn" class="btn btn-primary write_a_review_button">
-        <%= t(".write_review") %>
-      </button>
+      <% if can? :create, Review.new(book: @book) %>
+        <button id="writeReviewBtn" class="btn btn-primary write_a_review_button">
+          <%= t(".write_review") %>
+        </button>
+      <% end %>
 
       <div id="reviewForm" class="d-none mt-3">
         <%= render "books/review_form", book: book, review: Review.new %>

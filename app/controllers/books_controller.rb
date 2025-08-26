@@ -26,6 +26,9 @@ write_a_review destroy_review)
 
   # GET /books/:id
   def show
+    @book = Book.find(params[:id])
+    authorize! :read, @book
+
     respond_to do |format|
       format.html
       format.turbo_stream do
@@ -40,6 +43,8 @@ write_a_review destroy_review)
 
   # GET /books/search
   def search
+    authorize! :search, Book
+
     @query = params[:q]
     @search_type = normalize_search_type(params[:search_type])
 
@@ -57,6 +62,7 @@ write_a_review destroy_review)
 
   # POST /books/:id/borrow
   def borrow # rubocop:disable Metrics/AbcSize
+    authorize! :borrow, @book
     session[:borrow_cart] ||= []
 
     book_id = @book.id
@@ -85,6 +91,7 @@ write_a_review destroy_review)
 
   # POST /books/:id/add_to_favorite
   def add_to_favorite
+    authorize! :add_to_favorite, @book
     @favorite ||= current_user.favorites.new(favorable: @book)
 
     respond_to do |format|
@@ -105,6 +112,8 @@ write_a_review destroy_review)
 
   # DELETE /books/:id/remove_from_favorite
   def remove_from_favorite
+    authorize! :remove_from_favorite, @book
+
     respond_to do |format|
       if @favorite.nil?
         format.html {redirect_to @book, alert: t(".favorite_not_found")}
@@ -125,8 +134,9 @@ write_a_review destroy_review)
 
   # POST /books/:id/write_a_review
   def write_a_review
-    @user_review ||= current_user.reviews.new(book: @book)
+    authorize! :create, Review.new(book: @book)
 
+    @user_review ||= current_user.reviews.new(book: @book)
     @user_review.assign_attributes(review_params)
 
     if @user_review.save
@@ -151,6 +161,8 @@ write_a_review destroy_review)
 
   # DELETE /books/:id/destroy_review
   def destroy_review
+    authorize! :destroy, @user_review
+
     if @user_review&.destroy
       refresh_review_stats
 

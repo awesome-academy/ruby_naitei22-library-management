@@ -1,4 +1,6 @@
 class Admin::AuthorsController < Admin::ApplicationController
+  before_action -> { authorize! :manage, :admin_authors }
+
   PERMITTED_AUTHOR_PARAMS = %i(
     name
     bio

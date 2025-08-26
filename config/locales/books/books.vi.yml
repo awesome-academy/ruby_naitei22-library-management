@@ -93,6 +93,8 @@ vi:
       in_publisher: "trong nhà xuất bản"
       items_per_page:
         other: "%{count} mục mỗi trang"
+    write_a_review:
+      not_borrowed: "Bạn chưa mượn cuốn sách này nên không thể viết review."
 
   topbar:
     search_placeholder: "Tìm sách..."
