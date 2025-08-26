@@ -10,7 +10,7 @@ vi:
       submit: "Xác nhận"
       create_account: "Tạo tài khoản"
     create:
-      success: "Người dùng đã được tạo thành công."
+      confirmation_sent: "Vui lòng kiểm tra email để xác nhận tài khoản."
       error: "Lỗi!"
     edit:
       title: "Chỉnh sửa hồ sơ của bạn"

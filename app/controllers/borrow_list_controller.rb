@@ -1,5 +1,5 @@
 class BorrowListController < ApplicationController
-  before_action :logged_in_user
+  before_action :authenticate_user!
   before_action :set_borrow_request, only: %i(show cancel)
   before_action :ensure_pending_request, only: :cancel
 
