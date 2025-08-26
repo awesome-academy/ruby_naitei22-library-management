@@ -78,3 +78,33 @@
     white-space: nowrap;
   }
 }
+
+.dropdown-toggle {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  min-width: 120px;
+  max-width: 120px;
+}
+
+.rating-input {
+  max-width: 140px;
+  min-width: 140px;
+  text-align: center;
+}
+
+.favorite-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}

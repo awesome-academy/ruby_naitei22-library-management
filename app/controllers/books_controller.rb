@@ -14,14 +14,6 @@ write_a_review destroy_review)
 
   DEFAULT = "all".freeze
 
-  SEARCH_TYPES = {
-    title: :title,
-    category: :category,
-    author: :author,
-    publisher: :publisher,
-    all: :all
-  }.freeze
-
   DEFAULT_SEARCH_TYPE = :all
 
   # GET /books/:id
@@ -40,19 +32,11 @@ write_a_review destroy_review)
 
   # GET /books/search
   def search
-    @query = params[:q]
-    @search_type = normalize_search_type(params[:search_type])
+    @search_type = params[:search_type].presence || DEFAULT_SEARCH_TYPE
+    @query = params[:query]
 
-    books_scope = if @query.present?
-                    Book.search(@query, @search_type)
-                        .includes(BOOK_INCLUDES_WITH_IMAGE)
-                  else
-                    Book.includes(BOOK_INCLUDES_WITH_IMAGE)
-                        .order(:title)
-                  end
-
-    @pagy, @books = pagy(books_scope, items: Settings.pagy.books)
-    render :search
+    @books = filtered_books
+    @pagy, @books = pagy(@books, items: Settings.pagy.books)
   end
 
   # POST /books/:id/borrow
@@ -229,12 +213,38 @@ write_a_review destroy_review)
     @total_reviews = @book.reviews.count
   end
 
-  def normalize_search_type search_type
-    search_type_sym = search_type&.to_sym
-    SEARCH_TYPES.key?(search_type_sym) ? search_type_sym : DEFAULT_SEARCH_TYPE
-  end
-
   def review_params
     params.require(:review).permit(:score, :comment)
+  end
+
+  def filtered_books
+    ransack_query = build_ransack_query(@search_type, @query)
+    ransack_params = (params[:q] || {}).merge(ransack_query)
+
+    scope = Book.ransack(ransack_params)
+                .result(distinct: true)
+                .includes(BOOK_INCLUDES_WITH_IMAGE)
+
+    scope.filter_by(params[:filter], current_user)
+
+    if params[:favorites_only].present? && current_user
+      scope = scope.joins(:favorites)
+                   .where(favorites: {user_id: current_user.id})
+    end
+
+    scope
+  end
+
+  def build_ransack_query search_type, query
+    return {} if query.blank?
+
+    case search_type
+    when "title" then {title_cont: query}
+    when "author" then {author_name_cont: query}
+    when "publisher" then {publisher_name_cont: query}
+    when "category" then {categories_name_cont: query}
+    else
+      {title_or_author_name_or_publisher_name_or_categories_name_cont: query}
+    end
   end
 end
