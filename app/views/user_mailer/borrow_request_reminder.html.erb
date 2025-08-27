@@ -1,0 +1,6 @@
+<p><%= t(".greeting", name: @user.name) %></p>
+
+<p><%= t(".message_line1", end_date: @borrow_request.end_date.strftime(Settings.date_format.short)) %></p>
+<p><%= t(".message_line2", days: 1) %></p>
+
+<p><%= t(".message_line3") %></p>

@@ -22,4 +22,6 @@
 every 1.day, at: '12:00 am' do
   runner "BorrowRequest.auto_update_overdue_requests"
   runner "BorrowRequest.auto_update_expired_requests"
+  rake "user:remove_inactive_user"
+  rake "borrow_request:send_reminders"
 end
