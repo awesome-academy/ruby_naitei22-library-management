@@ -23,8 +23,9 @@
                 <%= link_to t(".view"), admin_user_path(user), class: "btn btn-sm btn-primary" %>
               </td>
               <td>
-                <span class="badge <%= user_status_color(user.status) %>">
-                  <%= user.status.capitalize %>
+                <% status = user.confirmed? ? "active" : "inactive" %>
+                <span class="badge <%= user_status_color(status) %>">
+                  <%= t(".#{status}") %>
                 </span>
               </td>
             </tr>

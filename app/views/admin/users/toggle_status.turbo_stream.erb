@@ -1,7 +1,8 @@
+<% status = @user.confirmed? ? "active" : "inactive" %>
 <%= turbo_stream.replace dom_id(@user, :status_badge) do %>
   <span id="<%= dom_id(@user, :status_badge) %>" 
-        class="badge <%= user_status_color(@user.status) %>">
-    <%= @user.status.capitalize %>
+        class="badge <%= user_status_color(status) %>">
+    <%= t(".#{status}") %>
   </span>
 <% end %>
 

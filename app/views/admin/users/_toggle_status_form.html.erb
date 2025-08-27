@@ -5,6 +5,6 @@
              remote: true do |f| %>
 
   <%= f.submit (user.active? ? t(".set_inactive") : t(".set_active")),
-               class: opposite_user_status_color(user.status),
+               class: opposite_user_status_color(user.active?),
                data: { turbo_confirm: t(".confirm") } %>
 <% end %>
