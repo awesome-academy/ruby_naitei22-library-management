@@ -6,6 +6,8 @@ vi:
     activate_your_account: "Kích hoạt tài khoản của bạn"
     borrow_request_approved_subject: "Yêu cầu mượn sách của bạn đã được phê duyệt"
     borrow_request_rejected_subject: "Yêu cầu mượn sách của bạn đã bị từ chối"
+    borrow_request_reminder_subject: "Nhắc nhở trả sách"
+    account_deleted_subject: "Thông báo xóa tài khoản"
 
     borrow_request_approved:
       title: "Yêu cầu Mượn Sách Đã Được Phê Duyệt!"
@@ -30,7 +32,19 @@ vi:
       admin_note: "Lý do từ chối"
       next_steps: "Bạn có thể gửi yêu cầu mới hoặc liên hệ với thư viện để biết thêm thông tin."
       footer: "Cảm ơn bạn đã thông cảm."
-  account_activations:
-    edit:
-      success: "Tài khoản đã được kích hoạt!"
-      error: "Liên kết kích hoạt không hợp lệ"
+    account_activations:
+      edit:
+        success: "Tài khoản đã được kích hoạt!"
+        error: "Liên kết kích hoạt không hợp lệ"
+  
+    borrow_request_reminder:
+      reminder_subject: "Nhắc nhở trả sách"
+      greeting: "Xin chào %{name},"
+      message_line1: "Bạn đã mượn sách và hạn trả là ngày %{end_date}."
+      message_line2: "Đây là email nhắc nhở: bạn chỉ còn %{days} ngày để trả sách."
+      message_line3: "Vui lòng sắp xếp để trả đúng hạn. Cảm ơn!"
+
+    account_deleted:
+      greeting: "Xin chào %{name},"
+      body: "Chúng tôi xin thông báo rằng tài khoản của bạn đã bị xóa khỏi hệ thống."
+      mistake: "Nếu bạn nghĩ đây là nhầm lẫn, vui lòng liên hệ lại với quản trị viên."
