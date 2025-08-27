@@ -4,12 +4,11 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for :session, url: login_path do |f| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= f.label :email %>
       <%= f.email_field :email, class: "form-control" %>
 
       <%= f.label :password %>
-      <%= link_to "(forgot password)", new_password_reset_path %>
       <%= f.password_field :password, class: "form-control" %>
 
       <%= f.submit t(".log_in"), class: "btn btn-primary" %>
@@ -20,16 +19,13 @@
     <% end %>
 
     <div class="text-center mt-3">
-    <p><%= t(".or") %></p>
-    <%= link_to auth_provider_path(provider: "google_oauth2"), method: :post,
-                class: "btn btn-danger",
-                data: { turbo: false } do %>
-      <i class="fab fa-google"></i> <%= t(".login_with_google") %>
-    <% end %>
-  </div>
-    <p>
-      <%= t(".new_user?") %>
-      <%= link_to t(".sign_up_now!"), signup_path %>
-    </p>
+      <p><%= t(".or") %></p>
+      <%= link_to "#", method: :post,
+                  class: "btn btn-danger",
+                  data: { turbo: false } do %>
+        <i class="fab fa-google"></i> <%= t(".login_with_google") %>
+      <% end %>
+    </div>
+    <%= render "devise/shared/links" %>
   </div>
 </div>

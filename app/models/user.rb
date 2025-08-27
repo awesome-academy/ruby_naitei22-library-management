@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :rememberable, :validatable,
+         :lockable, :recoverable, :registerable
   USER_PERMIT = %i(name email password password_confirmation date_of_birth
 gender).freeze
   USER_OAUTH_SETUP_PERMIT = %i(password password_confirmation date_of_birth
@@ -11,11 +15,6 @@ gender date_of_birth phone_number address).freeze
   FAVORITE_AUTHORS_INCLUDES = [:books, :favorites,
 {image_attachment: :blob}].freeze
 
-  has_secure_password
-  # has_secure_password cung cấp: # rubocop:disable Style/AsciiComments
-  # - Các thuộc tính ảo: password, password_confirmation # rubocop:disable Style/AsciiComments
-  # - Trường password_digest để lưu hash # rubocop:disable Style/AsciiComments
-  # - Phương thức authenticate(password) để xác thực # rubocop:disable Style/AsciiComments
   has_one_attached :avatar
 
   enum role: {user: 0, admin: 1, super_admin: 2}
@@ -41,10 +40,7 @@ gender date_of_birth phone_number address).freeze
 
   has_one_attached :image
 
-  attr_accessor :remember_token, :activation_token, :reset_token
-
   before_save :downcase_email
-  before_create :create_activation_digest
 
   scope :recent, -> {order(created_at: :desc)}
   scope :order_by_created, -> {order(created_at: :asc)}
@@ -116,48 +112,6 @@ gender date_of_birth phone_number address).freeze
     end
   end
 
-  def remember
-    self.remember_token = User.new_token
-    update_column :remember_digest, User.digest(remember_token)
-  end
-
-  def forget
-    update_column :remember_digest, nil
-  end
-
-  def authenticated? attribute, token
-    digest = send "#{attribute}_digest"
-    return false unless digest
-
-    BCrypt::Password.new(digest).is_password?(token)
-  end
-
-  def activate
-    update_column(:activated_at, Time.zone.now)
-  end
-
-  def activated?
-    activated_at.present?
-  end
-
-  def send_activation_email
-    UserMailer.account_activation(self).deliver_now
-  end
-
-  def send_password_reset_email
-    UserMailer.password_reset(self).deliver_now
-  end
-
-  def create_reset_digest
-    self.reset_token = User.new_token
-    update_columns reset_digest: User.digest(reset_token),
-                   reset_sent_at: Time.zone.now
-  end
-
-  def password_reset_expired?
-    reset_sent_at < Settings.mailer.expire_hour.hours.ago
-  end
-
   class << self
     def digest string
       cost = if ActiveModel::SecurePassword.min_cost
@@ -217,7 +171,7 @@ gender date_of_birth phone_number address).freeze
       return false
     end
 
-    (password_digest.blank? || !password.nil?) && !oauth_user?
+    (encrypted_password.blank? || !password.nil?) && !oauth_user?
   end
 
   def password_presence_if_confirmation_provided

@@ -1,0 +1,5 @@
+<p><%= t("user_mailer.greeting") %> <%= @user.name %>,</p>
+
+<p><%= t("user_mailer.welcome_message") %></p>
+
+<%= unlock_url(@resource, unlock_token: @token) %>
