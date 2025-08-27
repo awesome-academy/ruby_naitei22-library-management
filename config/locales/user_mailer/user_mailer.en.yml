@@ -6,6 +6,8 @@ en:
     activate_your_account: "Activate your account"
     borrow_request_approved_subject: "Your book borrow request has been approved"
     borrow_request_rejected_subject: "Your book borrow request has been rejected"
+    borrow_request_reminder_subject: "Book Return Reminder"
+    account_deleted_subject: "Account Deletion Notice"
 
     borrow_request_approved:
       title: "Borrow Request Approved!"
@@ -30,7 +32,19 @@ en:
       admin_note: "Reason for rejection"
       next_steps: "You may submit a new request or contact the library for more information."
       footer: "Thank you for your understanding."
-  account_activations:
-    edit:
-      success: "Account activated!"
-      error: "Invalid activation link"
+    account_activations:
+      edit:
+        success: "Account activated!"
+        error: "Invalid activation link"
+  
+    borrow_request_reminder:
+      reminder_subject: "Book Return Reminder"
+      greeting: "Hello %{name},"
+      message_line1: "You borrowed a book and the due date is %{end_date}."
+      message_line2: "This is a reminder: you only have %{days} day left to return the book."
+      message_line3: "Please make sure to return it on time. Thank you!"
+
+    account_deleted:
+      greeting: "Hello %{name},"
+      body: "We would like to inform you that your account has been deleted from the system."
+      mistake: "If you think this is a mistake, please contact the administrator."
