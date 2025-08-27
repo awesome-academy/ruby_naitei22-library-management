@@ -3,24 +3,84 @@
 <!-- Search Form -->
 <div class="row justify-content-center mb-4">
   <div class="col-md-10">
-    <%= form_with url: search_books_path, method: :get, local: true, class: "search-form-container" do |f| %>
-      <!-- First row: Search type and input field -->
+    <%= form_with url: search_books_path, method: :get, local: true, class: "search-form-container" do %>
       <div class="d-flex gap-2 mb-3">
-        <%= f.select :search_type,
-            search_type_options_for_select(@search_type),
-            {},
-            { class: "form-select" } %>
+        <!-- Search Type Dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center justify-content-between text-truncate"
+                  type="button" id="searchTypeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="truncate-text me-2">
+              <%= current_search_type_label(params[:search_type]) %>
+            </span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="searchTypeDropdown">
+            <% search_type_options.each do |value, label| %>
+              <li>
+                <%= link_to label, search_books_path(query: params[:query], search_type: value, filter: params[:filter]),
+                            class: "dropdown-item #{params[:search_type] == value ? "active" : ""}" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
 
-        <%= f.text_field :q,
-            value: @query,
+        <!-- Search Text -->
+        <%= text_field_tag :query,
+            params[:query],
             placeholder: t(".search_placeholder"),
             class: "form-control",
             autocomplete: "off" %>
+        
+        <!-- Filter -->
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center justify-content-between text-truncate"
+                  type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="truncate-text me-2">
+              <%= current_filter_label(params[:filter]) %>
+            </span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="filterDropdown">
+            <% filter_options.each do |value, label| %>
+              <li>
+                <%= link_to label,
+                            search_books_path(query: params[:query], search_type: params[:search_type], filter: value),
+                            class: "dropdown-item #{params[:filter] == value ? "active" : ""}" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       </div>
 
-      <!-- Second row: Search button centered -->
+      <!-- Rating + Favorites Filter -->
+      <div class="d-flex justify-content-between align-items-center mb-3 ps-4 pe-4">
+        <!-- Rating Filter -->
+        <div class="d-flex align-items-center gap-4 ms-3">
+          <h5 class="text-muted mb-0"><%= t(".filter_by_rating") %>:</h5>
+          
+          <%= number_field_tag "q[average_rating_gteq]",
+                params.dig(:q, :average_rating_gteq),
+                step: 0.1, min: 0, max: 5,
+                class: "form-control rating-input w-auto align-self-center mb-0",
+                placeholder: t(".min_rating") %>
+
+          <%= number_field_tag "q[average_rating_lteq]",
+                params.dig(:q, :average_rating_lteq),
+                step: 0.1, min: 0, max: 5,
+                class: "form-control rating-input w-auto align-self-center mb-0",
+                placeholder: t(".max_rating") %>
+        </div>
+        
+        <!-- Favorites Filter -->
+        <div class="d-flex align-items-center">
+          <%= check_box_tag :favorites_only, "1", params[:favorites_only].present?,
+                class: "favorite-checkbox", id: "favorites_only" %>
+          <%= label_tag :favorites_only, t(".my_favorites_books"),
+                class: "form-check-label text-muted mt-3" %>
+        </div>
+      </div>
+
+      <!-- Submit -->
       <div class="d-flex justify-content-center">
-        <%= f.submit t("topbar.search"), class: "btn btn-dark px-5" %>
+        <%= submit_tag t("topbar.search"), class: "btn btn-dark px-5" %>
       </div>
     <% end %>
   </div>
@@ -31,7 +91,7 @@
     <% if @query.present? %>
       <h3><%= t(".results_for", query: @query) %></h3>
       <% unless @search_type == :all %>
-        <small class="text-muted">(<%= t("books.search.in_#{@search_type}") %>)</small>
+        <small class="text-muted">(<%= t(".in_#{@search_type}") %>)</small>
       <% end %>
     <% else %>
       <h3><%= t(".all_books") %></h3>
@@ -79,7 +139,10 @@
                 <strong><%= t(".author") %>:</strong> <%= truncate(book.author.name, length: Settings.books.author_truncated_length) %><br>
                 <strong><%= t(".publisher") %>:</strong> <%= truncate(book.publisher.name, length: Settings.books.publisher_truncated_length) %><br>
                 <strong><%= t(".categories") %>:</strong>
-                <%= truncate(book.categories.pluck(:name).join(", "), length: Settings.books.category_truncated_length) %>
+                <%= truncate(book.categories.pluck(:name).join(", "), length: Settings.books.category_truncated_length) %><br>
+                <small>
+                  <%= book.average_rating %> / <%= Settings.digits.digit_5 %> ★
+                </small>
               </p>
               <p class="card-text">
                 <small class="text-muted">

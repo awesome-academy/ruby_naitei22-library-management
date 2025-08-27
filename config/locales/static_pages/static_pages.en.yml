@@ -23,4 +23,7 @@ en:
       publisher: "Publisher"
       search_placeholder: "Search..."
       good_morning: "Good Morning"
-      recommended: "Recommended for You"
+      sub_message: "Discover your next favorite book below"
+      newest_books: "Newest books"
+      most_borrowed_books: "Most borrowed books"
+      highest_rating_books: "Highest rating books"

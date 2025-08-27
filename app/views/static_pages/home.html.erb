@@ -11,26 +11,50 @@
     <!-- Search form -->
     <%= form_with url: search_books_path, method: :get, local: true, class: "d-flex mt-3" do |f| %>
       <%= f.select :search_type,
-          search_type_options_for_select(params[:search_type] || default_search_type),
+          search_type_options_for_select(params[:search_type] || BooksController::DEFAULT_SEARCH_TYPE),
           {},
           { class: "form-select form-select-lg w-auto rounded-start-5 text-center" } %>
 
-      <%= f.text_field :q,
-          value: params[:q],
+      <%= f.text_field :query,
+          value: params[:query],
           placeholder: t(".search_placeholder"),
-          class: "form-control form-control-lg border-start-0 border-end-0 rounded-0 px-5",
-          style: "min-width: 250px;" %>
+          class: "home-search-query form-control form-control-lg border-start-0 border-end-0 rounded-0 px-5" %>
 
       <%= f.submit "🔍", class: "btn btn-danger rounded-end-5 px-4 home-search-btn" %>
     <% end %>
   </div>
 </div>
 
-<!-- Section: Recommended -->
-<div class="mb-5 ps-5" id="recommended-books-section">
-  <h4 class="fw-semibold"><%= t(".good_morning") %></h4>
-  <p class="text-muted"><%= t(".recommended") %></p>
-  <%= turbo_frame_tag "recommended_books" do %>
-    <%= render partial: "books/recommended_books" %>
+<!-- Section: Books with filter -->
+<div class="mb-5 ps-5" id="books-section">
+  <%= turbo_frame_tag "books_section" do %>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h4 class="fw-semibold"><%= t(".good_morning") %></h4>
+        <p class="text-muted mb-3"><%= t(".sub_message") %></p>
+      </div>
+
+      <!-- Drop bar filter -->
+      <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle"
+                type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <%= current_filter_label(params[:filter]) %>
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="filterDropdown">
+          <% filter_options.each do |value, label| %>
+            <li>
+              <%= link_to label,
+                          root_path(filter: value),
+                          class: "dropdown-item #{params[:filter] == value ? "active" : ""}",
+                          data: { turbo_frame: "books_section" } %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <%= render partial: "books/recommended_books",
+              locals: { books: @books, pagy: @pagy_books } %>
   <% end %>
 </div>

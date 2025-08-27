@@ -23,4 +23,7 @@ vi:
       publisher: "Nhà xuất bản"
       search_placeholder: "Tìm kiếm..."
       good_morning: "Chào buổi sáng"
-      recommended: "Gợi ý dành cho bạn"
+      sub_message: "Khám phá cuốn sách yêu thích tiếp theo của bạn bên dưới"
+      newest_books: "Sách mới nhất"
+      most_borrowed_books: "Sách được mượn nhiều nhất"
+      highest_rating_books: "Sách được đánh giá cao nhất"

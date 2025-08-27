@@ -114,7 +114,49 @@ class Book < ApplicationRecord
       .order("borrow_count DESC")
   }
 
-  scope :recommended, -> {order(publication_year: :desc)}
+  scope :newest, -> {order(publication_year: :desc)}
+
+  scope :most_borrow_count, -> {order(borrow_count: :desc)}
+
+  scope :by_highest_rating, lambda { # rubocop:disable Layout/SpaceInsideBlockBraces
+    left_joins(:reviews)
+      .select("books.*, COALESCE(AVG(reviews.score), 0) AS avg_rating")
+      .group("books.id")
+      .order(Arel.sql("COALESCE(AVG(reviews.score), 0) DESC"))
+  }
+
+  scope :ordered_by_title, -> {order(:title)}
+
+  ransacker :average_rating, type: :decimal do
+    Arel.sql <<~SQL.squish
+      (
+        SELECT COALESCE(AVG(reviews.score), 0)
+        FROM reviews
+        WHERE reviews.book_id = books.id
+      )
+    SQL
+  end
+
+  # filter dynamic theo params[:filter]
+  def self.filter_by filter, current_user = nil
+    case filter
+    when "newest"
+      newest
+    when "most_borrow_count"
+      most_borrow_count
+    when "highest_rating"
+      by_highest_rating
+    when "my_favorites"
+      if current_user
+        joins(:favorites)
+          .where(favorites: {user_id: current_user.id})
+      else
+        none
+      end
+    else
+      ordered_by_title
+    end
+  end
 
   def average_rating
     return Settings.digits.digit_0 if reviews.empty?
@@ -122,33 +164,11 @@ class Book < ApplicationRecord
     reviews.average(:score).round(1)
   end
 
-  def self.ransackable_attributes(*)
-    %w(title)
+  def self.ransackable_attributes _auth_object = nil
+    %w(title average_rating)
   end
 
-  scope :search, lambda {|query, search_type = :all|
-    return none if query.blank?
-
-    case search_type.to_sym
-    when :title
-      where("books.title LIKE ?", "%#{query}%")
-    when :author
-      joins(:author).where("authors.name LIKE ?", "%#{query}%")
-    when :publisher
-      joins(:publisher).where("publishers.name LIKE ?", "%#{query}%")
-    when :category
-      joins(:categories).where("categories.name LIKE ?", "%#{query}%")
-    else # :all or any other value
-      joins(:author, :publisher)
-        .left_joins(:categories)
-        .where(
-          "books.title LIKE :query OR
-           authors.name LIKE :query OR
-           publishers.name LIKE :query OR
-           categories.name LIKE :query",
-          query: "%#{query}%"
-        )
-        .distinct
-    end
-  }
+  def self.ransackable_associations _auth_object = nil
+    %w(author publisher categories favorites)
+  end
 end
