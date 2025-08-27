@@ -24,9 +24,10 @@
         <p><strong><%= t(".created_at") %>:</strong> <%= @user.created_at.strftime(Settings.date_format.long) %></p>
         <p>
           <strong><%= t(".status") %>:</strong>
+          <% status = @user.confirmed? ? "active" : "inactive" %>
           <span id="<%= dom_id(@user, :status_badge) %>" 
-                class="badge <%= user_status_color(@user.status) %>">
-            <%= @user.status.capitalize %>
+                class="badge <%= user_status_color(status) %>">
+            <%= t(".#{status}") %>
           </span>
         </p>
         <div id="<%= dom_id(@user, :toggle_button) %>">

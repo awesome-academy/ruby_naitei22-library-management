@@ -30,10 +30,12 @@ module Admin::UsersHelper
        placeholder: t(".search_name_placeholder")},
       {attr: :email_cont, type: :search, label: t(".search_email"),
        placeholder: t(".search_email_placeholder")},
-      {attr: :status_eq, type: :select, label: t(".status"),
-       options: User.statuses.map do |k, v|
-                  [k.humanize, v]
-                end, include_blank: t(".all")}
+      {attr: :confirmed_at_present, type: :select, label: t(".status"),
+       options: [
+         [t(".active"), true],
+         [t(".inactive"), false]
+       ],
+       include_blank: t(".all")}
     ]
   end
 end

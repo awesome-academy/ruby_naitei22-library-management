@@ -28,7 +28,7 @@ class Admin::UsersController < Admin::ApplicationController
   private
 
   def toggle_user_status
-    @user.active? ? @user.inactive! : @user.active!
+    @user.toggle_active!
     flash.now[:notice] = t(".update_success")
   rescue StandardError => e
     Rails.logger.error("Toggle status failed: #{e.message}")

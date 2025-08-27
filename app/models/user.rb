@@ -19,7 +19,6 @@ gender).freeze
 
   enum role: {user: 0, admin: 1, super_admin: 2}
   enum gender: {male: 0, female: 1, other: 2}
-  enum status: {inactive: 0, active: 1}
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_PHONE_REGEX = /\A\+?\d{10,15}\z/
@@ -77,6 +76,23 @@ gender).freeze
             length: {maximum: 500},
             allow_blank: true
 
+  def active?
+    confirmed_at.present?
+  end
+
+  def inactive?
+    confirmed_at.nil?
+  end
+
+  def toggle_active!
+    if active?
+      update!(confirmed_at: nil, confirmation_token: Devise.friendly_token,
+              confirmation_sent_at: Time.current)
+    else
+      confirm # Devise method
+    end
+  end
+
   def self.ransackable_attributes _auth_object = nil
     %w(
       id
@@ -84,7 +100,7 @@ gender).freeze
       email
       phone_number
       role
-      status
+      confirmed_at
       created_at
     )
   end
