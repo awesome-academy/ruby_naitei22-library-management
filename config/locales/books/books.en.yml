@@ -104,6 +104,7 @@ en:
       most_borrowed_books: "Most borrowed books"
       highest_rating_books: "Highest rating books"
       my_favorites_books: "My Favorites Books"
+      filter_by_rating: "Filter By Rating"
       min_rating: "Min rating"
       max_rating: "Max rating"
       in_title: "in titles"
