@@ -1,6 +1,6 @@
 # app/controllers/admin/users_controller.rb
 class Admin::UsersController < Admin::ApplicationController
-  before_action :set_user, only: %i(show toggle_status)
+  load_and_authorize_resource
 
   # GET /admin/users
   def index
@@ -33,14 +33,6 @@ class Admin::UsersController < Admin::ApplicationController
   rescue StandardError => e
     Rails.logger.error("Toggle status failed: #{e.message}")
     flash.now[:alert] = t(".update_fail")
-  end
-
-  def set_user
-    @user = User.find_by(id: params[:id])
-    return if @user
-
-    flash[:alert] = t("admin.users.flash.not_found")
-    redirect_to users_path
   end
 
   def user_params

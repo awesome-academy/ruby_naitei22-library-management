@@ -1,10 +1,10 @@
 class Admin::CategoriesController < Admin::ApplicationController
+  load_and_authorize_resource
+
   PERMITTED_CATEGORY_PARAMS = %i(
     name
     description
   ).freeze
-
-  before_action :set_category, only: %i(show edit update destroy)
 
   # GET /admin/categories
   def index
@@ -58,14 +58,6 @@ class Admin::CategoriesController < Admin::ApplicationController
   end
 
   private
-
-  def set_category
-    @category = Category.find_by(id: params[:id])
-    return unless @category.nil?
-
-    flash[:alert] = t("admin.categories.flash.not_found")
-    redirect_to admin_categories_path
-  end
 
   def category_params
     params.require(:category).permit(*PERMITTED_CATEGORY_PARAMS)

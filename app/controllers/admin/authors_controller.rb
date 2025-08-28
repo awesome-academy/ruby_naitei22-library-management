@@ -1,4 +1,6 @@
 class Admin::AuthorsController < Admin::ApplicationController
+  load_and_authorize_resource
+
   PERMITTED_AUTHOR_PARAMS = %i(
     name
     bio
@@ -6,8 +8,6 @@ class Admin::AuthorsController < Admin::ApplicationController
     death_date
     nationality
   ).freeze
-
-  before_action :set_author, only: %i(show edit update destroy)
 
   # GET /admin/authors
   def index
@@ -61,14 +61,6 @@ class Admin::AuthorsController < Admin::ApplicationController
   end
 
   private
-
-  def set_author
-    @author = Author.find_by(id: params[:id])
-    return unless @author.nil?
-
-    flash[:alert] = t("admin.authors.flash.not_found")
-    redirect_to admin_authors_path
-  end
 
   def author_params
     params.require(:author).permit(*PERMITTED_AUTHOR_PARAMS)
