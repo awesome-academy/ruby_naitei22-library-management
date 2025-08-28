@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe BooksController, type: :controller do
+  include Devise::Test::ControllerHelpers
+
   let!(:publisher) { Publisher.where(name: "Publisher").first_or_create! }
   let!(:author)    { Author.where(name: "Author").first_or_create! }
 
@@ -36,12 +38,19 @@ RSpec.describe BooksController, type: :controller do
       email: "user@test.com",
       password: "123456",
       gender: "male",
-      date_of_birth: "2000-01-01"
+      date_of_birth: "2000-01-01",
+      confirmed_at: Time.current
     )
   end
 
-  before { allow(controller).to receive(:current_user).and_return(user) }
+  before do
+    sign_in user
+    allow(controller).to receive(:current_ability).and_return(
+      Ability.new(user).tap { |a| a.can :manage, :all }
+    )
+  end
 
+  # ---------------------------------------------------------------------
   describe "GET #show" do
     context "when book exists (HTML)" do
       it "assigns @book" do
@@ -80,23 +89,44 @@ RSpec.describe BooksController, type: :controller do
     end
   end
 
+  # ---------------------------------------------------------------------
   describe "GET #search" do
     it "finds books by title" do
-      get :search, params: { q: "Book", search_type: "title" }
+      get :search, params: { query: "Book", search_type: "title" }
       expect(assigns(:books)).to include(book, another_book)
     end
 
     it "returns all books if query is empty" do
-      get :search, params: { q: "", search_type: "all" }
+      get :search, params: { query: "", search_type: "all" }
       expect(assigns(:books)).to include(book, another_book)
     end
 
     it "normalizes invalid search_type to all" do
-      get :search, params: { q: "Book", search_type: "invalid_type" }
+      get :search, params: { query: "Book", search_type: "invalid_type" }
       expect(assigns(:books)).to include(book, another_book)
+    end
+
+    describe "with filters" do
+      it "applies filter_by scope" do
+        expect(Book).to receive(:ransack).and_call_original
+        expect(Book).to receive(:filter_by).with("recent", user).and_call_original
+        get :search, params: { query: "", filter: "recent" }
+      end
+
+      context "when favorites_only param is present" do
+        before do
+          Favorite.create!(user: user, favorable: book)
+          get :search, params: { query: "", favorites_only: true }
+        end
+
+        it "assigns only favorite books" do
+          expect(assigns(:books)).to match_array([book])
+        end
+      end
     end
   end
 
+  # ---------------------------------------------------------------------
   describe "POST #borrow" do
     context "HTML format" do
       it "stores correct book_id in borrow_cart" do
@@ -142,8 +172,21 @@ RSpec.describe BooksController, type: :controller do
         expect(response).to have_http_status(:ok)
       end
     end
+
+    context "with invalid quantity" do
+      before { post :borrow, params: { id: book.id, quantity: 0 } }
+
+      it "redirects back to book show" do
+        expect(response).to redirect_to(book_path(book))
+      end
+
+      it "sets flash alert for invalid quantity" do
+        expect(flash[:alert]).to eq(I18n.t("books.borrow.invalid_quantity"))
+      end
+    end
   end
 
+  # ---------------------------------------------------------------------
   describe "POST #add_to_favorite" do
     context "HTML format" do
       it "creates favorite with correct user" do
@@ -176,6 +219,7 @@ RSpec.describe BooksController, type: :controller do
     end
   end
 
+  # ---------------------------------------------------------------------
   describe "DELETE #remove_from_favorite" do
     before { @favorite = Favorite.create!(user: user, favorable: book) }
 
@@ -212,6 +256,7 @@ RSpec.describe BooksController, type: :controller do
     end
   end
 
+  # ---------------------------------------------------------------------
   describe "POST #write_a_review" do
     it "creates review with correct user" do
       post :write_a_review, params: { id: book.id, review: { score: 5, comment: "Great!" } }
@@ -244,42 +289,94 @@ RSpec.describe BooksController, type: :controller do
     end
   end
 
+  # ---------------------------------------------------------------------
   describe "DELETE #destroy_review" do
-    before { @review = Review.create!(book: book, user: user, score: 4, comment: "Good") }
+    context "when review exists" do
+      before { @review = Review.create!(book: book, user: user, score: 4, comment: "Good") }
 
-    it "destroys review from DB" do
-      expect {
-        delete :destroy_review, params: { id: book.id }
-      }.to change(Review, :count).by(-1)
+      it "destroys review from DB" do
+        expect {
+          delete :destroy_review, params: { id: book.id }
+        }.to change(Review, :count).by(-1)
+      end
+
+      it "returns 422 if destroy fails (Turbo Stream)" do
+        allow_any_instance_of(Review).to receive(:destroy).and_return(false)
+        delete :destroy_review, params: { id: book.id }, format: :turbo_stream
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "sets flash alert if destroy fails (HTML)" do
+        allow_any_instance_of(Review).to receive(:destroy).and_return(false)
+        delete :destroy_review, params: { id: book.id }, format: :html
+        expect(flash[:alert]).to eq(I18n.t("books.destroy_review.delete_failed"))
+      end
     end
 
-    it "returns 422 if destroy fails (Turbo Stream)" do
-      allow_any_instance_of(Review).to receive(:destroy).and_return(false)
-      delete :destroy_review, params: { id: book.id }, format: :turbo_stream
-      expect(response).to have_http_status(:unprocessable_entity)
-    end
+    context "when review not found" do
+      before { delete :destroy_review, params: { id: book.id } }
 
-    it "sets flash alert if destroy fails (HTML)" do
-      allow_any_instance_of(Review).to receive(:destroy).and_return(false)
-      delete :destroy_review, params: { id: book.id }, format: :html
-      expect(flash[:alert]).to eq(I18n.t("books.destroy_review.delete_failed"))
+      it "redirects back to book show" do
+        expect(response).to redirect_to(book_path(book))
+      end
+
+      it "sets flash alert for review not found" do
+        expect(flash[:alert]).to eq(I18n.t("books.destroy_review.review_not_found"))
+      end
     end
   end
 
+  # ---------------------------------------------------------------------
+  describe "authorization rescue" do
+    before do
+      allow(controller).to receive(:current_ability).and_return(Ability.new(nil))
+      get :borrow, params: { id: book.id, quantity: 1 }
+    end
+
+    it "redirects to root_path when access denied" do
+      expect(response).to redirect_to(root_path)
+    end
+
+    it "sets flash alert when access denied" do
+      expect(flash[:alert]).to eq(I18n.t("books.access_denied"))
+    end
+  end
+
+  # ---------------------------------------------------------------------
   describe "private methods" do
-    it "normalize_search_type returns valid type" do
-      expect(controller.send(:normalize_search_type, "title")).to eq(:title)
-    end
-
-    it "normalize_search_type defaults invalid type to :all" do
-      expect(controller.send(:normalize_search_type, "invalid")).to eq(:all)
-    end
-
     it "review_params permits score and comment" do
       allow(controller).to receive(:params).and_return(
         ActionController::Parameters.new(review: { score: 5, comment: "Good" })
       )
       expect(controller.send(:review_params)).to eq({ "score" => 5, "comment" => "Good" })
+    end
+
+    describe "#build_ransack_query" do
+      it "returns title_cont hash for title" do
+        expect(controller.send(:build_ransack_query, "title", "abc")).to eq({ title_cont: "abc" })
+      end
+
+      it "returns author_name_cont hash for author" do
+        expect(controller.send(:build_ransack_query, "author", "abc")).to eq({ author_name_cont: "abc" })
+      end
+
+      it "returns publisher_name_cont hash for publisher" do
+        expect(controller.send(:build_ransack_query, "publisher", "abc")).to eq({ publisher_name_cont: "abc" })
+      end
+
+      it "returns categories_name_cont hash for category" do
+        expect(controller.send(:build_ransack_query, "category", "abc")).to eq({ categories_name_cont: "abc" })
+      end
+
+      it "returns OR query for invalid type" do
+        expect(controller.send(:build_ransack_query, "unknown", "abc")).to eq(
+          { title_or_author_name_or_publisher_name_or_categories_name_cont: "abc" }
+        )
+      end
+
+      it "returns {} when query is blank" do
+        expect(controller.send(:build_ransack_query, "title", "")).to eq({})
+      end
     end
   end
 end

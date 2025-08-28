@@ -92,6 +92,14 @@ function initBorrowCart() {
         const newTable = doc.querySelector("table.table");
         const oldTable = form.querySelector("table.table");
 
+        const rows = newTable?.querySelectorAll("tbody tr") || [];
+
+        if (rows.length === 0) {
+          // Nếu xóa hết sách hoặc chỉ còn 1 và xóa → reload page
+          window.location.reload();
+          return;
+        }
+
         // Update table
         if (newTable && oldTable) oldTable.replaceWith(newTable);
 
@@ -99,14 +107,6 @@ function initBorrowCart() {
         const newPagination = doc.querySelector(".pagination");
         const oldPagination = document.querySelector(".pagination");
         if (newPagination && oldPagination) oldPagination.replaceWith(newPagination);
-
-        // Nếu table rỗng sau xóa → chuyển về page trước
-        const rows = newTable?.querySelectorAll("tbody tr") || [];
-        if (rows.length === 0 && currentPage > 1) {
-          const prevPage = currentPage - 1;
-          window.location.href = `/borrow_request?page=${prevPage}`;
-          return;
-        }
 
         showFlash("success", data.message || I18n.t("borrow_request.remove_success"));
       } else {

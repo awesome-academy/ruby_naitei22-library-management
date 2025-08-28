@@ -1,8 +1,8 @@
 class BorrowRequestController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_books_selected, only: :checkout
-  before_action :ensure_valid_dates, only: :checkout
-  before_action :ensure_sufficient_books, only: :checkout
+  before_action :set_selected_books, only: :checkout
+  before_action :set_and_validate_dates, only: :checkout
+  before_action :check_sufficient_books, only: :checkout
 
   SELECTED = "1".freeze
   NOT_SELECTED = "0".freeze
@@ -18,7 +18,10 @@ class BorrowRequestController < ApplicationController
   def update_borrow_cart
     update_cart_items
     update_start_date
+    return if performed?
+
     update_end_date
+    return if performed?
 
     respond_to do |format|
       format.html do
@@ -52,9 +55,41 @@ class BorrowRequestController < ApplicationController
   end
 
   # POST /borrow_request/checkout
-  def checkout
+  def checkout # rubocop:disable Metrics/AbcSize
     authorize! :checkout, BorrowRequest
+
+    if @selected_books.blank?
+      return redirect_to borrow_request_index_path,
+                         flash: {danger: t(".no_books_selected")}
+    end
+
+    if @start_date.nil?
+      return redirect_to borrow_request_index_path,
+                         flash: {danger: t(".invalid_start_date_format")}
+    end
+
+    if @end_date.nil?
+      return redirect_to borrow_request_index_path,
+                         flash: {danger: t(".invalid_end_date_format")}
+    end
+
+    if @start_date < Time.zone.today
+      return redirect_to borrow_request_index_path,
+                         flash: {danger: t(".invalid_start_date")}
+    end
+
+    if @end_date <= @start_date
+      return redirect_to borrow_request_index_path,
+                         flash: {danger: t(".invalid_end_date")}
+    end
+
+    unless sufficient_books?(@selected_books, @books)
+      return redirect_to borrow_request_index_path
+    end
+
     create_borrow_request(@selected_books, @start_date, @end_date)
+    return if performed?
+
     clear_checked_out_books(@selected_books)
 
     redirect_to borrow_request_index_path,
@@ -132,30 +167,17 @@ class BorrowRequestController < ApplicationController
   end
 
   # ------------------- CHECKOUT HELPERS -------------------
-  def ensure_books_selected
-    @selected_books = selected_cart_items
-    return unless @selected_books.empty?
-
-    redirect_to borrow_request_index_path,
-                flash: {danger: t(".no_books_selected")}
+  def set_selected_books
+    @selected_books = session[:borrow_cart].select {|item| item["selected"]}
   end
 
-  def ensure_valid_dates
-    @start_date, @end_date = parse_start_and_end_dates
-    return if valid_dates?(@start_date, @end_date)
-
-    redirect_to borrow_request_index_path and return
+  def set_and_validate_dates
+    @start_date = parse_date(:start_date)
+    @end_date   = parse_date(:end_date)
   end
 
-  def ensure_sufficient_books
+  def check_sufficient_books
     @books = load_books_in_cart
-    return if sufficient_books?(@selected_books, @books)
-
-    redirect_to borrow_request_index_path
-  end
-
-  def selected_cart_items
-    session[:borrow_cart].select {|item| item["selected"]}
   end
 
   def parse_date key
@@ -167,40 +189,12 @@ class BorrowRequestController < ApplicationController
     nil
   end
 
-  def parse_start_and_end_dates
-    [parse_date(:start_date), parse_date(:end_date)]
-  end
-
-  def valid_dates? start_date, end_date # rubocop:disable Metrics/AbcSize,Metrics/PerceivedComplexity
-    if start_date.nil?
-      redirect_to borrow_request_index_path,
-                  flash: {danger: t(".invalid_start_date_format")} and return false # rubocop:disable Layout/LineLength
-    end
-
-    if end_date.nil?
-      redirect_to borrow_request_index_path,
-                  flash: {danger: t(".invalid_end_date_format")} and return false # rubocop:disable Layout/LineLength
-    end
-
-    if start_date < Time.zone.today
-      flash[:danger] = t(".invalid_start_date")
-      redirect_to borrow_request_index_path and return false
-    end
-
-    if end_date <= start_date
-      flash[:danger] = t(".invalid_end_date")
-      redirect_to borrow_request_index_path and return false
-    end
-
-    true
-  end
-
   def load_books_in_cart
     book_ids = session[:borrow_cart].map {|item| item["book_id"]}
     Book.where(id: book_ids).index_by(&:id)
   end
 
-  def sufficient_books? selected_books, books # rubocop:disable Metrics/AbcSize
+  def sufficient_books? selected_books, books
     insufficient_books = []
 
     selected_books.each do |item|
@@ -213,11 +207,13 @@ class BorrowRequestController < ApplicationController
       end
     end
 
-    return true if insufficient_books.empty?
+    if insufficient_books.any?
+      flash[:error] =
+        t(".insufficient_books", books: insufficient_books.join(", "))
+      return false
+    end
 
-    flash[:error] =
-      t(".insufficient_books", books: insufficient_books.join(", "))
-    redirect_to borrow_request_index_path and return false
+    true
   end
 
   def create_borrow_request selected_books, start_date, end_date
@@ -238,8 +234,8 @@ class BorrowRequestController < ApplicationController
         )
       end
     end
-  rescue ActiveRecord::RecordInvalid => e
-    flash[:danger] = t(".checkout_failed", error: e.message)
+  rescue ActiveRecord::RecordInvalid => _e
+    flash[:danger] = t(".checkout_failed")
     redirect_to borrow_request_index_path and return
   end
 

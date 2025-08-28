@@ -14,12 +14,23 @@ require 'rails-controller-testing'
 
 require 'spec_helper'
 
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    # Sử dụng cho RSpec
+    with.test_framework :rspec
+    # Tích hợp với Rails
+    with.library :rails
+  end
+end
+
 # Tự động load file trong spec/support nếu bạn có tạo helper riêng
 # Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
 
 Rails::Controller::Testing.install
 
 RSpec.configure do |config|
+  # FactoryBot syntax methods (allow dùng create, build trực tiếp)
+  config.include FactoryBot::Syntax::Methods
   # Tắt transactional fixtures của Rails
   config.use_transactional_fixtures = false
 

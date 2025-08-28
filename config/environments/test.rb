@@ -6,6 +6,12 @@ require "active_support/core_ext/integer/time"
 # and recreated between test runs. Don't rely on the data there!
 
 Rails.application.configure do
+  Devise.setup do |config|
+    config.mailer_sender = 'please-change-me@example.com'
+    config.parent_mailer = 'ActionMailer::Base'
+  end
+
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Turn false under Spring and add config.action_view.cache_template_loading = true.

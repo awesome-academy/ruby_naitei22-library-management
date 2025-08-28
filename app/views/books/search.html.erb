@@ -42,8 +42,8 @@
             <% filter_options.each do |value, label| %>
               <li>
                 <%= link_to label,
-                            search_books_path(query: params[:query], search_type: params[:search_type], filter: value),
-                            class: "dropdown-item #{params[:filter] == value ? "active" : ""}" %>
+                    search_books_path(request.query_parameters.merge(filter: value)),
+                    class: "dropdown-item #{params[:filter] == value ? "active" : ""}" %>
               </li>
             <% end %>
           </ul>
@@ -80,6 +80,8 @@
 
       <!-- Submit -->
       <div class="d-flex justify-content-center">
+        <%= hidden_field_tag :filter, params[:filter] %>
+        <%= hidden_field_tag :search_type, params[:search_type] %>
         <%= submit_tag t("topbar.search"), class: "btn btn-dark px-5" %>
       </div>
     <% end %>

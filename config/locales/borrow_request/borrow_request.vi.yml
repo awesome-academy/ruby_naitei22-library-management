@@ -21,6 +21,27 @@ vi:
       no_image: "Không có ảnh"
       remove: "Xóa"
       confirm_remove: "Bạn có chắc muốn xóa sách này?"
+    
+    remove_from_borrow_cart:
+      remove_success: "Xóa thành công."
+      book_not_in_cart: "Sách không có trong giỏ mượn."
+
+    update_borrow_cart:
+      update_success: "Cập nhật giỏ mượn thành công."
+      invalid_start_date_format: "Ngày bắt đầu không hợp lệ"
+      invalid_end_date_format: "Ngày kết thúc không hợp lệ"
+
+    checkout:
+      checkout_success: "Yêu cầu mượn sách đã được gửi thành công."
+      no_books_selected: "Vui lòng chọn ít nhất một cuốn sách để mượn."
+      checkout_success: "Yêu cầu mượn sách đã được gửi thành công."
+      no_books_selected: "Vui lòng chọn ít nhất một cuốn sách để mượn."
+      invalid_start_date_format: "Ngày bắt đầu không hợp lệ"
+      invalid_end_date_format: "Ngày kết thúc không hợp lệ"
+      invalid_start_date: "Ngày bắt đầu phải từ hôm nay trở đi"
+      invalid_end_date: "Ngày kết thúc phải sau ngày bắt đầu"
+      insufficient_books: "Không đủ sách: %{books}"
+      checkout_failed: "Không thể hoàn tất mượn sách: %{error}"
 
     update_success: "Cập nhật giỏ hàng thành công."
     remove_success: "Xóa thành công"
@@ -33,7 +54,7 @@ vi:
     book_not_found: "Sách không tồn tại"
     insufficient_books: "Không đủ số lượng cho các sách: %{books}"
     checkout_success: "Yêu cầu mượn sách đã được gửi."
-    checkout_failed: "Mượn sách thất bại: %{error}"
+    checkout_failed: "Không thể hoàn tất mượn sách: %{error}"
     auto_save_failed: "Lưu giỏ sách thất bại. Vui lòng thử lại."
     remove_failed: "Xóa sách thất bại. Vui lòng thử lại."
     remove_not_found: "Không tìm thấy sách trong giỏ."
