@@ -101,3 +101,7 @@ vi:
     check_email: "Vui lòng kiểm tra email của bạn để nhận liên kết kích hoạt."
     email_error: "Đã xảy ra lỗi khi gửi email kích hoạt. Vui lòng thử lại sau."
     require_password_setup: "Bạn không có quyền truy cập chức năng này."
+    registrations:
+      new:
+        title: "Đăng ký tài khoản"
+        create_account: "Tạo tài khoản"

@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users, only: [:sessions, :unlocks, :registrations, :password], controllers: {
-    sessions: "sessions"
+  devise_for :users, only: [:sessions, :unlocks, :registrations, :passwords,
+:omniauth_callbacks], controllers: {
+    sessions: "sessions",
+    registrations: "users/registrations",
+    omniauth_callbacks: "users/omniauth_callbacks",
+    passwords: "password_resets"
   }
 
   scope "(:locale)", locale: /en|vi/ do

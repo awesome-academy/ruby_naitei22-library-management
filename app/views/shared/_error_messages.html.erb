@@ -1,10 +1,10 @@
-<% if @user.errors.any? %>
+<% if local_assigns[:resource] && resource.errors.any? %>
   <div id="error_explanation">
     <div class="alert alert-danger">
-      <%= t("errors.template.header", count: @user.errors.count, model: t("activerecord.models.user")) %>
+      <%= t("errors.template.header", count: resource.errors.count, model: t("activerecord.models.user")) %>
     </div>
     <ul>
-      <% @user.errors.full_messages.each do |msg| %>
+      <% resource.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>

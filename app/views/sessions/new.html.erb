@@ -20,9 +20,7 @@
 
     <div class="text-center mt-3">
       <p><%= t(".or") %></p>
-      <%= link_to "#", method: :post,
-                  class: "btn btn-danger",
-                  data: { turbo: false } do %>
+      <%= link_to user_google_oauth2_omniauth_authorize_path, data: { turbo: false } , class: "btn btn-danger" do %>
         <i class="fab fa-google"></i> <%= t(".login_with_google") %>
       <% end %>
     </div>

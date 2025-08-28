@@ -101,3 +101,7 @@ en:
     email_error: "There was an error sending the activation email. Please try again later."
     password_setup_success: "Account setup completed successfully!"
     require_password_setup: "You are not authorized to access this feature."
+    registrations:
+      new:
+        title: "Sign Up"
+        create_account: "Create account"

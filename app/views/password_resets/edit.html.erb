@@ -3,17 +3,20 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@user, url: password_reset_path(params[:id])) do |f| %>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
       <%= render "shared/error_messages" %>
-      <%= hidden_field_tag :email, @user.email %>
+      <%= f.hidden_field :reset_password_token %>
 
       <%= f.label :password, t(".password_label") %>
-      <%= f.password_field :password, class: "form-control" %>
+      <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control" %>
 
       <%= f.label :password_confirmation, t(".password_confirmation_label") %>
-      <%= f.password_field :password_confirmation, class: "form-control" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
 
       <%= f.submit t(".submit"), class: "btn btn-primary" %>
     <% end %>
+
+    <%= render "devise/shared/links" %>
+
   </div>
 </div>

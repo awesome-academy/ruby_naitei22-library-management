@@ -2,7 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :rememberable, :validatable,
-         :lockable, :recoverable, :registerable
+         :lockable, :recoverable, :registerable, :omniauthable,
+         omniauth_providers: [:google_oauth2]
   USER_PERMIT = %i(name email password password_confirmation date_of_birth
 gender).freeze
   USER_OAUTH_SETUP_PERMIT = %i(password password_confirmation date_of_birth
@@ -143,7 +144,6 @@ gender date_of_birth phone_number address).freeze
         gender: :other,
         date_of_birth: 18.years.ago.to_date,
         status: :active,
-        activated_at: Time.current,
         password: SecureRandom.hex(16)
       )
     end
