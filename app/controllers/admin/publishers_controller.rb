@@ -1,4 +1,6 @@
 class Admin::PublishersController < Admin::ApplicationController
+  load_and_authorize_resource
+
   PERMITTED_PUBLISHER_PARAMS = %i(
     name
     address
@@ -6,8 +8,6 @@ class Admin::PublishersController < Admin::ApplicationController
     email
     website
   ).freeze
-
-  before_action :set_publisher, only: %i(show edit update destroy)
 
   # GET /admin/publishers
   def index
@@ -61,14 +61,6 @@ class Admin::PublishersController < Admin::ApplicationController
   end
 
   private
-
-  def set_publisher
-    @publisher = Publisher.find_by(id: params[:id])
-    return unless @publisher.nil?
-
-    flash[:alert] = t("admin.publishers.flash.not_found")
-    redirect_to admin_publishers_path
-  end
 
   def publisher_params
     params.require(:publisher).permit(*PERMITTED_PUBLISHER_PARAMS)

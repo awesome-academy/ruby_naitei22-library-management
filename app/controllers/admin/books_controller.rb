@@ -1,4 +1,6 @@
 class Admin::BooksController < Admin::ApplicationController
+  load_and_authorize_resource
+
   PERMITTED_BOOK_PARAMS = [
     :title,
     :description,
@@ -12,8 +14,6 @@ class Admin::BooksController < Admin::ApplicationController
   ].freeze
 
   PRELOAD = %i(author publisher categories).freeze
-
-  before_action :set_book, only: %i(show edit update destroy)
 
   # GET /admin/books
   def index
@@ -66,20 +66,6 @@ class Admin::BooksController < Admin::ApplicationController
   end
 
   private
-
-  def set_book
-    @book =
-      case action_name.to_sym
-      when :show
-        Book.includes(PRELOAD).find_by(id: params[:id])
-      else
-        Book.find_by(id: params[:id])
-      end
-
-    return if @book
-
-    redirect_to admin_books_path, alert: t("admin.books.flash.not_found")
-  end
 
   def book_params
     params.require(:book).permit(*PERMITTED_BOOK_PARAMS)

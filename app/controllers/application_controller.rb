@@ -28,4 +28,8 @@ class ApplicationController < ActionController::Base
     flash[:danger] = t("auth.please_login")
     redirect_to new_user_session_path
   end
+
+  rescue_from CanCan::AccessDenied do |_exception|
+    redirect_to root_path, alert: t("cancan.access_denied")
+  end
 end

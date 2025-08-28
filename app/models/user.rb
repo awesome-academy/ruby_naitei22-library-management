@@ -36,6 +36,11 @@ gender).freeze
            source_type: Author.name
 
   has_many :borrow_requests, dependent: :destroy
+  has_many :borrow_request_items, through: :borrow_requests
+  has_many :borrowed_books, lambda { # rubocop:disable Layout/SpaceInsideBlockBraces
+                              where(borrow_requests: {status: %i(borrowed returned)}) # rubocop:disable Layout/LineLength
+                            },
+           through: :borrow_request_items, source: :book
 
   has_one_attached :image
 

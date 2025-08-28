@@ -1,7 +1,8 @@
 # app/controllers/admin/borrow_requests_controller.rb
 class Admin::BorrowRequestsController < ApplicationController
-  include Pagy::Backend
   helper_method :status_class
+
+  load_and_authorize_resource
 
   PRELOAD = %i(
     status
@@ -10,10 +11,6 @@ class Admin::BorrowRequestsController < ApplicationController
     actual_borrow_date
     approved_date
   ).freeze
-
-  before_action :require_admin
-  before_action :set_borrow_request,
-                only: %i(show edit_status change_status)
 
   # GET /admin/borrow_requests
   def index
@@ -47,15 +44,6 @@ class Admin::BorrowRequestsController < ApplicationController
   end
 
   private
-
-  def handle_stock_change prev_status, new_status
-    case new_status
-    when :approved
-      decrement_book_stock if prev_status != :approved
-    when :returned
-      increment_book_stock if prev_status != :returned
-    end
-  end
 
   def borrow_request_params
     params.fetch(:borrow_request, {}).permit(*PRELOAD)
@@ -167,17 +155,6 @@ class Admin::BorrowRequestsController < ApplicationController
     @borrow_request.borrow_request_items.each do |item|
       item.book.increment!(:available_quantity, item.quantity)
     end
-  end
-
-  def set_borrow_request
-    @borrow_request = BorrowRequest.find_by(id: params[:id])
-  end
-
-  def require_admin
-    return if current_user&.admin?
-
-    flash[:alert] = t(".flash.no_access")
-    redirect_to root_path
   end
 
   def update_borrow_request_status prev_status, new_status

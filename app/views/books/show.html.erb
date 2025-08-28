@@ -98,11 +98,13 @@
       <h4 class="mb-4"><strong><%= t(".more_books_by_author") %></strong></h4>
       <div class="ms-5">
         <%= turbo_frame_tag "recommended_books" do %>
-          <%= render partial: "recommended_books" %>
+          <%= render partial: "recommended_books",
+                    locals: { books: @recommended_books, pagy: @pagy_books } %>
         <% end %>
       </div>
     </div>
   <% end %>
+
 
   <!-- Rating and Reviews -->
   <div class="row px-3">

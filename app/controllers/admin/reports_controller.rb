@@ -1,4 +1,6 @@
 class Admin::ReportsController < Admin::ApplicationController
+  authorize_resource class: false
+
   # Get /admin/reports
   def show
     @borrow_vs_return_percent = borrow_vs_return_percent
