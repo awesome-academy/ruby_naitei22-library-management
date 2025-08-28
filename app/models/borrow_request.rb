@@ -8,6 +8,7 @@ class BorrowRequest < ApplicationRecord
 
   has_many :borrow_request_items, dependent: :destroy
   has_many :books, through: :borrow_request_items
+  accepts_nested_attributes_for :borrow_request_items, allow_destroy: true
 
   enum status: {
     expired: -1,
@@ -17,7 +18,8 @@ class BorrowRequest < ApplicationRecord
     returned: 3,
     overdue: 4,
     cancelled: 5,
-    borrowed: 6
+    borrowed: 6,
+    need_update: 7
   }
 
   scope :by_status, lambda {|status|
@@ -39,7 +41,7 @@ class BorrowRequest < ApplicationRecord
   }
 
   OVERDUE = "end_date < :now AND status = :borrowed".freeze
-  EXPIRED = "end_date < :now AND status = :pending".freeze
+  EXPIRED = "start_date < :now AND status = :pending".freeze
   delegate :name, :email, :avatar, to: :user, prefix: true
   delegate :name, to: :approved_by_admin, prefix: true, allow_nil: true
   delegate :name, to: :rejected_by_admin, prefix: true, allow_nil: true
@@ -63,7 +65,6 @@ class BorrowRequest < ApplicationRecord
   scope :sorted, -> {order(created_at: :desc)}
   validates :status, inclusion: {in: statuses.keys}
   validates :request_date, :status, :start_date, :end_date, presence: true
-  validates :actual_return_date, presence: true, if: :returned?
   validate :end_date_after_start_date
   validate :admin_note_required_if_rejected, if: :rejected?
   validate :returned_date_required_if_return, if: :returned?
@@ -158,6 +159,16 @@ class BorrowRequest < ApplicationRecord
     end
   end
 
+  def stock_error_messages
+    borrow_request_items.map do |item|
+      book = item.book
+      if book.available_quantity < item.quantity
+        "Book '#{book.title}' only has #{book.available_quantity} " \
+        "left (requested #{item.quantity})"
+      end
+    end.compact
+  end
+
   private
   def end_date_after_start_date
     return if start_date.blank? || end_date.blank?
@@ -167,13 +178,13 @@ class BorrowRequest < ApplicationRecord
   end
 
   def admin_note_required_if_rejected
-    return unless status == :rejected && admin_note.blank?
+    return unless rejected? && admin_note.blank?
 
     errors.add(:admin_note, :blank_if_rejected)
   end
 
   def returned_date_required_if_return
-    return unless status == :returned && actual_return_date.blank?
+    return unless returned? && actual_return_date.blank?
 
     errors.add(:actual_return_date, :blank_if_returned)
   end
@@ -203,7 +214,7 @@ class BorrowRequest < ApplicationRecord
   end
 
   def actual_borrow_date_after_start_date
-    return if actual_borrow_date.blank? || start_date.blank? || end_date.blank?
+    return if actual_borrow_date.blank? || start_date.blank?
 
     return unless actual_borrow_date < start_date
 

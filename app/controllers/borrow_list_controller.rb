@@ -1,6 +1,7 @@
 class BorrowListController < ApplicationController
-  before_action :logged_in_user
-  before_action :set_borrow_request, only: %i(show cancel)
+  before_action :authenticate_user!
+  before_action :set_borrow_request,
+                only: %i(show cancel edit_request update_request)
   before_action :ensure_pending_request, only: :cancel
 
   rescue_from Pagy::OverflowError, with: :redirect_to_last_page
@@ -31,6 +32,22 @@ class BorrowListController < ApplicationController
     )
   end
 
+  # GET /borrow_list/:id/edit_request
+  def edit_request
+    @borrow_request.borrow_request_items.includes(:book)
+  end
+
+  # PATCH /borrow_list/:id/update_request
+  def update_request
+    if @borrow_request.update(borrow_request_params.merge(status: :pending))
+      flash[:success] = t(".update_success")
+      redirect_to borrow_list_index_path
+    else
+      flash.now[:error] = t(".update_failure")
+      render :edit_request, status: :unprocessable_entity
+    end
+  end
+
   # PATCH /borrow_list/:id/cancel
   def cancel
     if @borrow_request.update(status: :cancelled)
@@ -42,6 +59,12 @@ class BorrowListController < ApplicationController
   end
 
   private
+
+  def borrow_request_params
+    params.require(:borrow_request).permit(
+      borrow_request_items_attributes: %i(id quantity _destroy)
+    )
+  end
 
   def ensure_pending_request
     return if @borrow_request&.pending?
@@ -72,6 +95,7 @@ class BorrowListController < ApplicationController
 
   def redirect_to_last_page
     flash[:warning] = t(".page_not_found")
-    redirect_to request.path
+    # redirect_to request.path
+    redirect_to url_for(page: @pagy&.last || 1)
   end
 end

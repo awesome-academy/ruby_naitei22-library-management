@@ -27,4 +27,8 @@ module ApplicationHelper
     base_title = t("layouts.application.base_title")
     page_title.empty? ? base_title : "#{page_title} | #{base_title}"
   end
+
+  def admin_user?
+    current_user&.admin?
+  end
 end

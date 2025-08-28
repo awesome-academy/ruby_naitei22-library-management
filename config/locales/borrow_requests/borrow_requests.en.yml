@@ -49,6 +49,7 @@ en:
           actual_return_date_label: "Actual return date"
           actual_borrow_date_label: "Actual borrowed date"
           approved_date_label: "Approved date"
+          need_update_reason_label: "Need update reason"
           admin_note_label: "Admin note"
           approved_by_label: "Approved by"
           rejected_by_label: "Rejected by"
@@ -78,6 +79,8 @@ en:
         not_available: "N/A"
       approved_date:
         not_available: "N/A"
+      need_update_reason:
+        no_reason: "N/A"
       admin_note:
         no_note: "N/A"
       approved_by:
@@ -106,3 +109,6 @@ en:
           no_change_status: "No changes made to the status"
       flash:
         no_access: "You do not have permission to access this page"
+      errors:
+        not_enough_stock: "Books %{title} only has %{stock} copies available in stock."
+        mailer_failed: "Failed to send borrow request %{status} email: %{error}"
