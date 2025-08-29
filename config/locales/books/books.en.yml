@@ -58,6 +58,7 @@ en:
     
     borrow:
       added_to_borrow_cart: "Book has been added to your borrow cart"
+      invalid_quantity: "Invalid quantity"
     
     review_section:
       your_reviewed: "Your review"
@@ -76,6 +77,7 @@ en:
     destroy_review:
       deleted_success: "Review deleted successfully."
       delete_failed: "Failed to delete the review."
+      review_not_found: "Review not found"
 
     search:
       search_results: "Search Results"

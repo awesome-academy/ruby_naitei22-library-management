@@ -21,6 +21,25 @@ en:
       no_image: "No Image"
       remove: "Remove"
       confirm_remove: "Are you sure you want to remove this book?"
+    
+    remove_from_borrow_cart:
+      remove_success: "Removed successfully"
+      book_not_in_cart: "Book is not in the borrow cart"
+    
+    update_borrow_cart:
+      update_success: "Borrow cart updated successfully."
+      invalid_start_date_format: "Invalid start date format"
+      invalid_end_date_format: "Invalid end date format"
+    
+    checkout:
+      checkout_success: "Borrow request submitted successfully."
+      no_books_selected: "Please select at least one book to borrow."
+      invalid_start_date_format: "Invalid start date format"
+      invalid_end_date_format: "Invalid end date format"
+      invalid_start_date: "Start date must be today or later"
+      invalid_end_date: "End date must be after start date"
+      insufficient_books: "Not enough books: %{books}"
+      checkout_failed: "Checkout failed: %{error}"
 
     update_success: "Cart updated successfully."
     remove_success: "Removed successfully"
@@ -33,7 +52,7 @@ en:
     book_not_found: "Book not found"
     insufficient_books: "Insufficient quantity for books: %{books}"
     checkout_success: "Borrow request submitted successfully."
-    checkout_failed: "Borrowing failed: %{error}"
+    checkout_failed: "checkout_failed: %{error}"
     auto_save_failed: "Failed to save cart. Please try again."
     remove_failed: "Failed to remove book. Please try again."
     remove_not_found: "Book not found in cart."

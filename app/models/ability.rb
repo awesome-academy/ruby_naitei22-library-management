@@ -15,7 +15,7 @@ class Ability
 
   private
 
-  def admin_abilities user
+  def admin_abilities _user
     can :access, :admin_panel
 
     can :manage, Book
@@ -25,8 +25,7 @@ class Ability
     can :manage, BorrowRequest
     can :read, :report
 
-    can %i(show edit update), User, id: user.id
-    can %i(read create update destroy), User
+    can %i(read create update destroy toggle_status), User
   end
 
   def user_abilities user

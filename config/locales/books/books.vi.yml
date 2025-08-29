@@ -58,7 +58,8 @@ vi:
     
     borrow:
       added_to_borrow_cart: "Sách đã được thêm vào giỏ mượn"
-    
+      invalid_quantity: "Số lượng không hợp lệ"
+
     review_section:
       your_reviewed: "Bạn đã đánh giá"
       delete_review: "Xóa đánh giá"
@@ -76,6 +77,7 @@ vi:
     destroy_review:
       deleted_success: "Xóa đánh giá thành công."
       delete_failed: "Xóa đánh giá thất bại."
+      review_not_found: "Không tìm thấy đánh giá"
 
     search:
       search_results: "Kết Quả Tìm Kiếm"
