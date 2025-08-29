@@ -7,7 +7,6 @@ FactoryBot.define do
     gender { :male }
     date_of_birth { 25.years.ago.to_date }
     status { :active }
-    activated_at { Time.current }
 
     trait :oauth_user do
       provider { "google" }
