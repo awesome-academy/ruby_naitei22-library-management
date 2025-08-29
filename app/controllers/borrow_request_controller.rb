@@ -1,4 +1,6 @@
 class BorrowRequestController < ApplicationController
+  load_and_authorize_resource
+
   before_action :logged_in_user
   before_action :ensure_books_selected, only: :checkout
   before_action :ensure_valid_dates, only: :checkout

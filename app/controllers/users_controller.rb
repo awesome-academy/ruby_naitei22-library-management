@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource
+
   before_action :logged_in_user,
                 only: %i(show edit update setup_password update_password)
   before_action :load_user, only: %i(show edit update follows)

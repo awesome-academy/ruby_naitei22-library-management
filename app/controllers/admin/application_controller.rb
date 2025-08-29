@@ -1,6 +1,10 @@
 class Admin::ApplicationController < ::ApplicationController
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, alert: exception.message
+  end
+
+  load_and_authorize_resource
   before_action :logged_in_user
-  before_action :admin_user
 
   private
 
@@ -8,12 +12,6 @@ class Admin::ApplicationController < ::ApplicationController
     return if logged_in?
 
     flash[:danger] = t("admin.books.flash.please_log_in")
-    redirect_to login_url
-  end
-
-  def admin_user
-    return if current_user&.admin?
-
-    redirect_to root_url, alert: t("admin.books.flash.access_denied")
+    redirect_to root_path
   end
 end

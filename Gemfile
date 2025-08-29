@@ -57,6 +57,7 @@ gem "bootsnap", require: false
 
 # Use Sass to process CSS
 gem "bootstrap-sass", "3.4.1"
+gem "cancancan", "~> 3.0"
 gem "config"
 gem "devise"
 gem "figaro"

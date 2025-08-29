@@ -1,4 +1,6 @@
 class BorrowListController < ApplicationController
+  load_and_authorize_resource :borrow_request, class: "BorrowRequest"
+
   before_action :logged_in_user
   before_action :set_borrow_request, only: %i(show cancel)
   before_action :ensure_pending_request, only: :cancel
@@ -61,6 +63,7 @@ class BorrowListController < ApplicationController
       else
         current_user.borrow_requests.find_by(id: params[:id])
       end
+    authorize! :read, @borrow_request if @borrow_request
 
     redirect_not_found unless @borrow_request
   end
