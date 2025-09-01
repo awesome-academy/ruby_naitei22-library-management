@@ -1,7 +1,7 @@
 # app/controllers/admin/borrow_requests_controller.rb
 class Admin::BorrowRequestsController < ApplicationController
   include Pagy::Backend
-  helper_method :status_class
+  include Admin::BorrowRequestsHelper
 
   PRELOAD = %i(
     status
@@ -9,6 +9,7 @@ class Admin::BorrowRequestsController < ApplicationController
     actual_return_date
     actual_borrow_date
     approved_date
+    need_update_reason
   ).freeze
 
   before_action :require_admin
@@ -47,15 +48,6 @@ class Admin::BorrowRequestsController < ApplicationController
   end
 
   private
-
-  def handle_stock_change prev_status, new_status
-    case new_status
-    when :approved
-      decrement_book_stock if prev_status != :approved
-    when :returned
-      increment_book_stock if prev_status != :returned
-    end
-  end
 
   def borrow_request_params
     params.fetch(:borrow_request, {}).permit(*PRELOAD)
@@ -150,7 +142,9 @@ class Admin::BorrowRequestsController < ApplicationController
         ), status: :unprocessable_entity
       end
       format.html do
-        render :edit_status, status: :unprocessable_entity
+        render partial: "status_form",
+               locals: {borrow_request: @borrow_request},
+               status: :unprocessable_entity
       end
     end
   end
@@ -182,8 +176,18 @@ class Admin::BorrowRequestsController < ApplicationController
 
   def update_borrow_request_status prev_status, new_status
     BorrowRequest.transaction do
-      update_request_attributes(prev_status, new_status)
-      handle_status_side_effects(prev_status, new_status)
+      case new_status
+      when :approved
+        if stock_enough?
+          update_request_attributes(prev_status, :approved)
+          handle_approved_status(prev_status)
+        else
+          handle_need_update_status
+        end
+      else
+        update_request_attributes(prev_status, new_status)
+        handle_status_side_effects(prev_status, new_status)
+      end
     end
 
     flash.now[:notice] = t(".status_updated")
@@ -194,18 +198,29 @@ class Admin::BorrowRequestsController < ApplicationController
     @borrow_request.update!(
       borrow_request_params.merge(
         status_extra_attributes(prev_status, new_status)
-      )
+      ).merge(status: new_status)
     )
   end
 
   def handle_status_side_effects prev_status, new_status
     case new_status
-    when :approved
-      handle_approved_status(prev_status)
     when :rejected
       send_status_notification_email(new_status)
     when :returned
       increment_book_stock if prev_status != :returned
+    end
+  end
+
+  def handle_need_update_status
+    @borrow_request.update!(
+      status: :need_update,
+      need_update_reason: @borrow_request.stock_error_messages
+    )
+  end
+
+  def stock_enough?
+    @borrow_request.borrow_request_items.all? do |item|
+      item.book.available_quantity >= item.quantity
     end
   end
 
@@ -222,7 +237,12 @@ class Admin::BorrowRequestsController < ApplicationController
       UserMailer.borrow_request_rejected(@borrow_request).deliver_later
     end
   rescue StandardError => e
-    Rails.logger.error
-    "Failed to send borrow request #{status} email: #{e.message}"
+    Rails.logger.error(
+      t(
+        ".errors.mailer_failed",
+        status:,
+        error: e.message
+      )
+    )
   end
 end

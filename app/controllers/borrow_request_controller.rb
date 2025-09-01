@@ -141,9 +141,7 @@ class BorrowRequestController < ApplicationController
 
   def ensure_valid_dates
     @start_date, @end_date = parse_start_and_end_dates
-    return if valid_dates?(@start_date, @end_date)
-
-    redirect_to borrow_request_index_path
+    nil if valid_dates?(@start_date, @end_date)
   end
 
   def ensure_sufficient_books

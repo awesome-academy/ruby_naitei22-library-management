@@ -1,0 +1,800 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>app/models/borrow_request.rb</title>
+    <link href="./assets/0.3.7/screen.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="./assets/0.3.7/print.css" media="print" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <script type="text/javascript" src="./assets/0.3.7/rcov.js"></script>
+  </head>
+  <body>
+    <h1>Ruby naitei22-library-management C0 Coverage Information - Simploco - RCov</h1>
+    <h2>app/models/borrow_request.rb</h2>
+
+    <div class="report_table_wrapper">
+      <table class='report' id='report_table'>
+        <thead>
+          <tr>
+            <th class="left_align">Name</th>
+            <th class="right_align">Total Lines</th>
+            <th class="right_align">Lines of Code</th>
+            <th class="left_align">Total Coverage</th>
+            <th class="left_align">Code Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="left_align"><a href="app-models-borrow_request_rb.html">app/models/borrow_request.rb</a></td>
+            <td class='right_align'><tt>247</tt></td>
+            <td class='right_align'><tt>127</tt></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>100.00%</tt></div>
+      <div class="percent_graph">
+        <div class="covered" style="width:100px"></div>
+        <div class="uncovered" style="width:0px"></div>
+      </div></td>
+            <td class="left_align"><div class="percent_graph_legend"><tt class=''>100.00%</tt></div>
+      <div class="percent_graph">
+        <div class="covered" style="width:100px"></div>
+        <div class="uncovered" style="width:0px"></div>
+      </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Key</h3>
+
+    <div class="key"><pre><span class='marked'>Code reported as executed by Ruby looks like this...</span><span class='marked1'>and this: this line is also marked as covered.</span><span class='inferred'>Lines considered as run by rcov, but not reported by Ruby, look like this,</span><span class='inferred1'>and this: these lines were inferred by rcov (using simple heuristics).</span><span class='uncovered'>Finally, here's a line marked as not executed.</span></pre></div>
+
+    <h3>Coverage Details</h3>
+
+    <table class="details">
+      <tbody>
+        <tr class="marked">
+          <td><pre><a name="line2">2</a> class BorrowRequest &lt; ApplicationRecord</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line3">3</a>   belongs_to :user</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line4">4</a>   # belongs_to :book</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line5">5</a>   belongs_to :approved_by_admin, class_name: User.name, optional: true</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line6">6</a>   belongs_to :rejected_by_admin, class_name: User.name, optional: true</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line7">7</a>   belongs_to :returned_by_admin, class_name: User.name, optional: true</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line8">8</a>   belongs_to :borrowed_by_admin, class_name: User.name, optional: true</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line9">9</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line10">10</a>   has_many :borrow_request_items, dependent: :destroy</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line11">11</a>   has_many :books, through: :borrow_request_items</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line12">12</a>   accepts_nested_attributes_for :borrow_request_items, allow_destroy: true</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line13">13</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line14">14</a>   enum status: {</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line15">15</a>     expired: -1,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line16">16</a>     pending: 0,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line17">17</a>     approved: 1,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line18">18</a>     rejected: 2,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line19">19</a>     returned: 3,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line20">20</a>     overdue: 4,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line21">21</a>     cancelled: 5,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line22">22</a>     borrowed: 6,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line23">23</a>     need_update: 7</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line24">24</a>   }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line25">25</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line26">26</a>   scope :by_status, lambda {|status|</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line27">27</a>     return all unless status.present? &amp;&amp; statuses.key?(status)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line28">28</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line29">29</a>     where(status:)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line30">30</a>   }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line31">31</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line32">32</a>   scope :by_request_date_from, lambda {|date|</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line33">33</a>     return all if date.blank?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line34">34</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line35">35</a>     where(&quot;request_date &gt;= ?&quot;, date.to_date)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line36">36</a>   }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line37">37</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line38">38</a>   scope :by_request_date_to, lambda {|date|</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line39">39</a>     return all if date.blank?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line40">40</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line41">41</a>     where(&quot;request_date &lt;= ?&quot;, date.to_date)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line42">42</a>   }</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line43">43</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line44">44</a>   OVERDUE = &quot;end_date &lt; :now AND status = :borrowed&quot;.freeze</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line45">45</a>   EXPIRED = &quot;start_date &lt; :now AND status = :pending&quot;.freeze</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line46">46</a>   delegate :name, :email, :avatar, to: :user, prefix: true</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line47">47</a>   delegate :name, to: :approved_by_admin, prefix: true, allow_nil: true</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line48">48</a>   delegate :name, to: :rejected_by_admin, prefix: true, allow_nil: true</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line49">49</a>   delegate :name, to: :returned_by_admin, prefix: true, allow_nil: true</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line50">50</a>   delegate :name, to: :borrowed_by_admin, prefix: true, allow_nil: true</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line51">51</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line52">52</a>   scope :overdue_requests, (lambda do</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line53">53</a>     where(</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line54">54</a>       OVERDUE,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line55">55</a>       now: Time.zone.now,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line56">56</a>       borrowed: BorrowRequest.statuses[:borrowed]</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line57">57</a>     )</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line58">58</a>   end)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line59">59</a>   scope :expired_requests, (lambda do</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line60">60</a>     where(</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line61">61</a>       EXPIRED,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line62">62</a>       now: Time.zone.now,</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line63">63</a>       pending: BorrowRequest.statuses[:pending]</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line64">64</a>     )</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line65">65</a>   end)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line66">66</a>   scope :sorted, -&gt; {order(created_at: :desc)}</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line67">67</a>   validates :status, inclusion: {in: statuses.keys}</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line68">68</a>   validates :request_date, :status, :start_date, :end_date, presence: true</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line69">69</a>   validate :end_date_after_start_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line70">70</a>   validate :admin_note_required_if_rejected, if: :rejected?</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line71">71</a>   validate :returned_date_required_if_return, if: :returned?</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line72">72</a>   validate :actual_return_date_cannot_be_future</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line73">73</a>   validate :actual_return_after_borrow_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line74">74</a>   validate :approved_date_before_start_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line75">75</a>   validate :approved_date_after_request_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line76">76</a>   validate :actual_borrow_date_after_start_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line77">77</a>   validate :actual_borrow_date_before_end_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line78">78</a>   validate :actual_borrow_date_after_approved_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line79">79</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line80">80</a>   def self.ransackable_attributes _auth_object = nil</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line81">81</a>     %w(</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line82">82</a>       id</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line83">83</a>       user_id</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line84">84</a>       request_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line85">85</a>       status</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line86">86</a>       start_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line87">87</a>       end_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line88">88</a>       actual_borrow_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line89">89</a>       actual_return_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line90">90</a>     )</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line91">91</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line92">92</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line93">93</a>   def self.ransackable_associations _auth_object = nil</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line94">94</a>     %w(user)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line95">95</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line96">96</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line97">97</a>   def self.auto_update_overdue_requests batch_size: 100</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line98">98</a>     logger = setup_logger</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line99">99</a>     logger.info &quot;Start auto updating overdue requests&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line100">100</a>     process_batches(batch_size, logger)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line101">101</a>     logger.info &quot;Finished auto updating overdue requests&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line102">102</a>   rescue StandardError =&gt; e</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line103">103</a>     log_error(logger, e)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line104">104</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line105">105</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line106">106</a>   def self.auto_update_expired_requests batch_size: 100</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line107">107</a>     logger = setup_expired_logger</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line108">108</a>     logger.info &quot;Start auto updating expired requests&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line109">109</a>     process_expired_batches(batch_size, logger)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line110">110</a>     logger.info &quot;Finished auto updating expired requests&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line111">111</a>   rescue StandardError =&gt; e</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line112">112</a>     log_error(logger, e)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line113">113</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line114">114</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line115">115</a>   class &lt;&lt; self</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line116">116</a>     private</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line117">117</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line118">118</a>     def setup_logger</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line119">119</a>       Logger.new(Rails.root.join(&quot;log/update_overdue.log&quot;)).tap do |logger|</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line120">120</a>         logger.level = Logger::INFO</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line121">121</a>         logger.formatter = proc do |severity, _datetime, _progname, msg|</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line122">122</a>           &quot;[#{Time.zone.now}] #{severity} → #{msg}\n&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line123">123</a>         end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line124">124</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line125">125</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line126">126</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line127">127</a>     def process_batches batch_size, logger</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line128">128</a>       overdue_requests.find_in_batches(batch_size:) do |batch|</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line129">129</a>         updated_count = where(id: batch.map(&amp;:id)).update_all(</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line130">130</a>           status: statuses[:overdue],</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line131">131</a>           updated_at: Time.zone.now</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line132">132</a>         )</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line133">133</a>         logger.info &quot;Updated #{updated_count} requests in this batch&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line134">134</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line135">135</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line136">136</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line137">137</a>     def log_error logger, error</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line138">138</a>       logger.error &quot;Error during auto update: #{error.message}&quot;</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line139">139</a>       logger.error error.backtrace.join(&quot;\n&quot;)</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line140">140</a>       Rails.logger.error error.full_message</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line141">141</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line142">142</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line143">143</a>     def setup_expired_logger</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line144">144</a>       Logger.new(Rails.root.join(&quot;log/update_expired.log&quot;)).tap do |logger|</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line145">145</a>         logger.level = Logger::INFO</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line146">146</a>         logger.formatter = proc do |_severity, _datetime, _progname, msg|</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line147">147</a>           &quot;[#{Time.zone.now}] INFO → #{msg}\n&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line148">148</a>         end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line149">149</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line150">150</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line151">151</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line152">152</a>     def process_expired_batches batch_size, logger</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line153">153</a>       expired_requests.find_in_batches(batch_size:) do |batch|</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line154">154</a>         updated_count = where(id: batch.map(&amp;:id)).update_all(</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line155">155</a>           status: statuses[:expired],</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line156">156</a>           updated_at: Time.zone.now</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line157">157</a>         )</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line158">158</a>         logger.info &quot;Updated #{updated_count} requests in this batch&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line159">159</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line160">160</a>     end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line161">161</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line162">162</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line163">163</a>   def stock_error_messages</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line164">164</a>     borrow_request_items.map do |item|</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line165">165</a>       book = item.book</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line166">166</a>       if book.available_quantity &lt; item.quantity</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line167">167</a>         &quot;Book &#39;#{book.title}&#39; only has #{book.available_quantity} &quot; \</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line168">168</a>         &quot;left (requested #{item.quantity})&quot;</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line169">169</a>       end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line170">170</a>     end.compact</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line171">171</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line172">172</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line173">173</a>   private</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line174">174</a>   def end_date_after_start_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line175">175</a>     return if start_date.blank? || end_date.blank?</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line176">176</a>     return unless end_date &lt; start_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line177">177</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line178">178</a>     errors.add(:end_date, :after_start_date)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line179">179</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line180">180</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line181">181</a>   def admin_note_required_if_rejected</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line182">182</a>     return unless rejected? &amp;&amp; admin_note.blank?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line183">183</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line184">184</a>     errors.add(:admin_note, :blank_if_rejected)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line185">185</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line186">186</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line187">187</a>   def returned_date_required_if_return</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line188">188</a>     return unless returned? &amp;&amp; actual_return_date.blank?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line189">189</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line190">190</a>     errors.add(:actual_return_date, :blank_if_returned)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line191">191</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line192">192</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line193">193</a>   def actual_return_date_cannot_be_future</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line194">194</a>     return if actual_return_date.blank?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line195">195</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line196">196</a>     return unless actual_return_date &gt; Time.zone.today</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line197">197</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line198">198</a>     errors.add(:actual_return_date, :cannot_be_future)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line199">199</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line200">200</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line201">201</a>   def approved_date_before_start_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line202">202</a>     return if approved_date.blank? || start_date.blank?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line203">203</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line204">204</a>     return unless approved_date &gt; start_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line205">205</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line206">206</a>     errors.add(:approved_date, :before_start_date)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line207">207</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line208">208</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line209">209</a>   def approved_date_after_request_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line210">210</a>     return if approved_date.blank? || request_date.blank?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line211">211</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line212">212</a>     return unless approved_date &lt; request_date.to_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line213">213</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line214">214</a>     errors.add(:approved_date, :after_request_date)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line215">215</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line216">216</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line217">217</a>   def actual_borrow_date_after_start_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line218">218</a>     return if actual_borrow_date.blank? || start_date.blank?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line219">219</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line220">220</a>     return unless actual_borrow_date &lt; start_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line221">221</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line222">222</a>     errors.add(:actual_borrow_date, :after_start_date)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line223">223</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line224">224</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line225">225</a>   def actual_borrow_date_before_end_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line226">226</a>     return if actual_borrow_date.blank? || end_date.blank?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line227">227</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line228">228</a>     return unless actual_borrow_date &gt; end_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line229">229</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line230">230</a>     errors.add(:actual_borrow_date, :before_end_date)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line231">231</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line232">232</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line233">233</a>   def actual_borrow_date_after_approved_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line234">234</a>     return if actual_borrow_date.blank? || approved_date.blank?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line235">235</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line236">236</a>     return unless actual_borrow_date &lt; approved_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line237">237</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line238">238</a>     errors.add(:actual_borrow_date, :after_approved_date)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line239">239</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line240">240</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line241">241</a>   def actual_return_after_borrow_date</pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line242">242</a>     return if actual_return_date.blank? || actual_borrow_date.blank?</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line243">243</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line244">244</a>     return unless actual_return_date &lt; actual_borrow_date</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line245">245</a> </pre></td>
+        </tr>
+        <tr class="marked">
+          <td><pre><a name="line246">246</a>     errors.add(:actual_return_date, :after_borrowed_date)</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line247">247</a>   end</pre></td>
+        </tr>
+        <tr class="inferred">
+          <td><pre><a name="line248">248</a> end</pre></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Generated on 2025-08-25 17:54:18 +0000 with <a href="https://github.com/fguillen/simplecov-rcov">SimpleCov-RCov 0.3.7</a></p>
+
+  </body>
+</html>

@@ -21,6 +21,40 @@
   <span class="badge <%= status_colors(@borrow_request.status) %>">
     <%= @borrow_request.status.humanize %>
   </span>
+  <% if @borrow_request.admin_note.present? %>
+    <p>
+      <strong><%= t(".admin_note") %>:</strong>
+      <%= @borrow_request.admin_note %>
+    </p>
+  <% end %>
+
+  <% if @borrow_request.approved_date.present? %>
+    <p>
+      <strong><%= t(".approved_date") %>:</strong>
+      <%= @borrow_request.approved_date.strftime(Settings.date_format.short) %>
+    </p>
+  <% end %>
+
+  <% if @borrow_request.need_update_reason.present? %>
+    <p>
+      <strong><%= t(".need_update_reason") %>:</strong>
+      <%= @borrow_request.need_update_reason %>
+    </p>
+  <% end %>
+
+  <% if @borrow_request.actual_borrow_date.present? %>
+    <p>
+      <strong><%= t(".actual_borrow_date") %>:</strong>
+      <%= @borrow_request.actual_borrow_date.strftime(Settings.date_format.short) %>
+    </p>
+  <% end %>
+
+  <% if @borrow_request.actual_return_date.present? %>
+    <p>
+      <strong><%= t(".actual_return_date") %>:</strong>
+      <%= @borrow_request.actual_return_date.strftime(Settings.date_format.short) %>
+    </p>
+  <% end %>
 </p>
 
 <hr>

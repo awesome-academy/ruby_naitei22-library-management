@@ -18,6 +18,12 @@
 ) %>
 
 <%= turbo_stream.replace(
+      "need_update_reason_#{@borrow_request.id}",
+      partial: "admin/borrow_requests/need_update_reason",
+      locals: { borrow_request: @borrow_request }
+) %>
+
+<%= turbo_stream.replace(
       "actual_borrow_date_#{@borrow_request.id}",
       partial: "admin/borrow_requests/actual_borrow_date",
       locals: { borrow_request: @borrow_request }

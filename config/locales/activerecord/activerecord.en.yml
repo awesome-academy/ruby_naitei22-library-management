@@ -93,8 +93,8 @@ en:
             admin_note:
               blank_if_rejected: "cannot be blank when status is rejected"
             actual_return_date:
-              blank_if_returned: "Actual return date cannot be blank when status is returned"
-              cannot_be_future: "Actual return date cannot be in the future"
+              blank_if_returned: "cannot be blank when status is returned"
+              cannot_be_future: "cannot be in the future"
               after_borrowed_date: "must be after the actual borrow date"
               before_end_date: "must be before the end date"
             phone_number:
@@ -110,3 +110,6 @@ en:
               after_approved_date: "must be after the approved date"
               before_end_date: "must be before the end date"
               after_start_date: "must be after the start date"
+            quantity:
+              blank: "can't be blank"
+              not_enough_stock: "is not enough in stock"
